@@ -20,9 +20,7 @@ class _SaveViewState extends State<SaveView> {
   @override
   void initState() {
     if (widget.note.id != null) {
-      String? title = widget.note.title;
-
-      _titleController.text = title == null ? '' : title;
+      _titleController.text = widget.note.title!;
       _descriptionController.text = widget.note.description!;
     }
 
@@ -46,21 +44,19 @@ class _SaveViewState extends State<SaveView> {
 
                 Navigator.pop(context);
               },
-              icon: Icon(
-                Icons.delete,
-              ),
+              icon: Icon(Icons.delete),
             ),
           IconButton(
             onPressed: () async {
               String title = _titleController.text;
               String description = _descriptionController.text;
 
-              if (description == '') {
+              if (description == '' && title == '') {
                 Navigator.pop(context);
                 return;
               }
 
-              widget.note.title = title == '' ? null : title;
+              widget.note.title = title;
               widget.note.description = description;
 
               await _noteDAO.save(widget.note);
@@ -76,14 +72,13 @@ class _SaveViewState extends State<SaveView> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
-              SizedBox(height: 8.0),
               TextField(
                 controller: _titleController,
                 decoration: InputDecoration(
                   hintText: 'Título',
                 ),
+                style: TextStyle(fontSize: 16.0),
               ),
-              SizedBox(height: 8.0),
               TextField(
                 controller: _descriptionController,
                 keyboardType: TextInputType.multiline,
@@ -91,6 +86,7 @@ class _SaveViewState extends State<SaveView> {
                 decoration: InputDecoration(
                   hintText: 'Descrição',
                 ),
+                style: TextStyle(fontSize: 16.0),
               ),
             ],
           ),

@@ -17,7 +17,7 @@ class AppDatabase {
         'CREATE TABLE note ( '
         'id_note INTEGER, '
         'title TEXT, '
-        'description TEXT NOT NULL, '
+        'description TEXT, '
         'status	INTEGER NOT NULL DEFAULT 1, '
         'PRIMARY KEY("id_note" AUTOINCREMENT) '
         ');');

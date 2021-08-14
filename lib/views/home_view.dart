@@ -34,6 +34,26 @@ class _HomeViewState extends State<HomeView> {
               child: CircularProgressIndicator(),
             );
           } else {
+            if (snapshot.data!.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.bookmark,
+                      size: 64.0,
+                    ),
+                    Text(
+                      'Nenhuma nota encontrada',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+
             List<NoteModel> notes = snapshot.data as List<NoteModel>;
 
             return ListView.builder(

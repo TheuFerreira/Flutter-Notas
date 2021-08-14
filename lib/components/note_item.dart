@@ -17,9 +17,7 @@ class NoteItem extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
       child: Container(
         width: double.maxFinite,
-        constraints: BoxConstraints(
-          maxHeight: 100,
-        ),
+        constraints: BoxConstraints(maxHeight: 100),
         child: InkWell(
           onTap: onTap,
           child: Card(
@@ -27,7 +25,7 @@ class NoteItem extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                note.title != null ? note.title! : note.description!,
+                note.title != '' ? note.title! : note.description!,
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

@@ -17,14 +17,17 @@ class NoteDAO {
 
   Future delete(NoteModel note) async {
     Database db = await _appDatabase.getDatabase();
-    await db.execute('UPDATE note SET status = 0 WHERE id_note = ?', [note.id]);
+    await db.execute(
+      'UPDATE note SET status = 0 WHERE id_note = ?',
+      [note.id],
+    );
   }
 
   Future save(NoteModel note) async {
     if (note.id == null) {
-      _insert(note);
+      await _insert(note);
     } else {
-      _update(note);
+      await _update(note);
     }
   }
 

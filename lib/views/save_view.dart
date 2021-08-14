@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_notas/database/dao/note_dao.dart';
 import 'package:flutter_notas/models/note_model.dart';
 
+import 'package:provider/provider.dart';
+
+import 'home/home_controller.dart';
+
 class SaveView extends StatefulWidget {
   final NoteModel note;
 
@@ -31,6 +35,8 @@ class _SaveViewState extends State<SaveView> {
 
   @override
   Widget build(BuildContext context) {
+    HomeController controller = context.watch<HomeController>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -39,11 +45,11 @@ class _SaveViewState extends State<SaveView> {
         actions: [
           if (_isEditing)
             IconButton(
-              onPressed: _deleteNote,
+              onPressed: () => _deleteNote(controller),
               icon: Icon(Icons.delete),
             ),
           IconButton(
-            onPressed: _saveNote,
+            onPressed: () => _saveNote(controller),
             icon: Icon(Icons.check),
           ),
         ],
@@ -76,13 +82,13 @@ class _SaveViewState extends State<SaveView> {
     );
   }
 
-  void _deleteNote() async {
-    await _noteDAO.delete(widget.note);
+  void _deleteNote(HomeController controller) async {
+    await controller.delete(widget.note);
 
     Navigator.pop(context, true);
   }
 
-  void _saveNote() async {
+  void _saveNote(HomeController controller) async {
     String title = _titleController.text;
     String description = _descriptionController.text;
 
@@ -94,7 +100,7 @@ class _SaveViewState extends State<SaveView> {
     widget.note.title = title;
     widget.note.description = description;
 
-    await _noteDAO.save(widget.note);
+    await controller.save(widget.note);
 
     Navigator.pop(context, true);
   }

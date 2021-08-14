@@ -14,14 +14,25 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   @override
+  void initState() {
+    super.initState();
+
+    Provider.of<HomeController>(context, listen: false).findAll();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    HomeController controller = context.watch<HomeController>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Notas'),
         actions: <IconButton>[
-          Provider.of<HomeController>(context).isSelecting
+          controller.isSelecting
               ? IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.deleteSelecteds();
+                  },
                   icon: Icon(Icons.delete),
                 )
               : IconButton(
@@ -30,7 +41,38 @@ class _HomeViewState extends State<HomeView> {
                 ),
         ],
       ),
-      body: Consumer<HomeController>(
+      body: ListView.builder(
+        itemCount: controller.notes.length,
+        itemBuilder: (context, index) {
+          NoteModel currentNote = controller.notes[index];
+
+          return NoteItem(
+            currentNote,
+            onTap: () => itemTap(currentNote),
+          );
+        },
+      ),
+    );
+  }
+
+  void itemTap(NoteModel note) async {
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SaveView(note),
+      ),
+    );
+
+    if (result == null) {
+      return;
+    }
+
+    setState(() {});
+  }
+}
+
+/*
+Consumer<HomeController>(
         builder: (context, controller, _) {
           return FutureBuilder<List<NoteModel>>(
             future: controller.findAll(),
@@ -77,22 +119,5 @@ class _HomeViewState extends State<HomeView> {
             },
           );
         },
-      ),
-    );
-  }
-
-  void itemTap(NoteModel note) async {
-    var result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SaveView(note),
-      ),
-    );
-
-    if (result == null) {
-      return;
-    }
-
-    setState(() {});
-  }
-}
+      )
+      */

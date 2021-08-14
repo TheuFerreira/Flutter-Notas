@@ -22,6 +22,8 @@ class _NoteItemState extends State<NoteItem> {
 
   @override
   Widget build(BuildContext context) {
+    HomeController controller = context.watch<HomeController>();
+
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Container(
@@ -36,13 +38,24 @@ class _NoteItemState extends State<NoteItem> {
             onTap: () {
               if (_isSelected) {
                 setState(() => _isSelected = false);
+                controller.removeSelected(widget.note);
+                return;
+              } else if (controller.isSelecting) {
+                setState(() => _isSelected = true);
+                controller.addNewSelecting(widget.note);
                 return;
               }
 
               widget.onTap!();
             },
             onLongPress: () {
-              setState(() => _isSelected = !_isSelected);
+              if (_isSelected) {
+                setState(() => _isSelected = false);
+                controller.removeSelected(widget.note);
+              } else {
+                setState(() => _isSelected = true);
+                controller.addNewSelecting(widget.note);
+              }
             },
             child: Card(
               elevation: 2,
@@ -72,7 +85,10 @@ class _NoteItemState extends State<NoteItem> {
                       right: 8,
                       child: InkWell(
                         onTap: () {
-                          setState(() => _isSelected = false);
+                          setState(() {
+                            _isSelected = false;
+                            controller.removeSelected(widget.note);
+                          });
                         },
                         child: Container(
                           width: 32,

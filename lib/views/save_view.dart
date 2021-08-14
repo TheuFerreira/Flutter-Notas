@@ -39,30 +39,11 @@ class _SaveViewState extends State<SaveView> {
         actions: [
           if (_isEditing)
             IconButton(
-              onPressed: () async {
-                await _noteDAO.delete(widget.note);
-
-                Navigator.pop(context);
-              },
+              onPressed: _deleteNote,
               icon: Icon(Icons.delete),
             ),
           IconButton(
-            onPressed: () async {
-              String title = _titleController.text;
-              String description = _descriptionController.text;
-
-              if (description == '' && title == '') {
-                Navigator.pop(context);
-                return;
-              }
-
-              widget.note.title = title;
-              widget.note.description = description;
-
-              await _noteDAO.save(widget.note);
-
-              Navigator.pop(context, true);
-            },
+            onPressed: _saveNote,
             icon: Icon(Icons.check),
           ),
         ],
@@ -93,5 +74,28 @@ class _SaveViewState extends State<SaveView> {
         ),
       ),
     );
+  }
+
+  void _deleteNote() async {
+    await _noteDAO.delete(widget.note);
+
+    Navigator.pop(context);
+  }
+
+  void _saveNote() async {
+    String title = _titleController.text;
+    String description = _descriptionController.text;
+
+    if (description == '' && title == '') {
+      Navigator.pop(context);
+      return;
+    }
+
+    widget.note.title = title;
+    widget.note.description = description;
+
+    await _noteDAO.save(widget.note);
+
+    Navigator.pop(context, true);
   }
 }

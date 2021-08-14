@@ -5,9 +5,9 @@ import 'package:flutter_notas/models/note_model.dart';
 class HomeController extends ChangeNotifier {
   final NoteDAO _noteDAO = NoteDAO();
 
-  Future<List<NoteModel>>? findAll() async {
-    await Future.delayed(Duration(seconds: 1));
+  bool isSelecting = false;
 
+  Future<List<NoteModel>> findAll() async {
     return await _noteDAO.findAll();
   }
 }

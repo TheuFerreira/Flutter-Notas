@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notas/models/note_model.dart';
+import 'package:flutter_notas/views/home/home_controller.dart';
+import 'package:provider/provider.dart';
 
 class NoteItem extends StatefulWidget {
   final NoteModel note;
@@ -39,7 +41,9 @@ class _NoteItemState extends State<NoteItem> {
 
               widget.onTap!();
             },
-            onLongPress: () => setState(() => _isSelected = !_isSelected),
+            onLongPress: () {
+              setState(() => _isSelected = !_isSelected);
+            },
             child: Card(
               elevation: 2,
               child: Stack(

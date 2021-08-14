@@ -19,10 +19,15 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         title: Text('Notas'),
         actions: <IconButton>[
-          IconButton(
-            onPressed: () => itemTap(NoteModel()),
-            icon: Icon(Icons.add),
-          ),
+          Provider.of<HomeController>(context).isSelecting
+              ? IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.delete),
+                )
+              : IconButton(
+                  onPressed: () => itemTap(NoteModel()),
+                  icon: Icon(Icons.add),
+                ),
         ],
       ),
       body: Consumer<HomeController>(

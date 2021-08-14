@@ -12,7 +12,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  NoteDAO _noteDAO = NoteDAO();
+  final NoteDAO _noteDAO = NoteDAO();
 
   @override
   Widget build(BuildContext context) {

@@ -48,6 +48,7 @@ class _HomeViewState extends State<HomeView> {
 
           return NoteItem(
             currentNote,
+            key: UniqueKey(),
             onTap: () => itemTap(currentNote),
           );
         },

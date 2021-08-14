@@ -79,7 +79,7 @@ class _SaveViewState extends State<SaveView> {
   void _deleteNote() async {
     await _noteDAO.delete(widget.note);
 
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   void _saveNote() async {

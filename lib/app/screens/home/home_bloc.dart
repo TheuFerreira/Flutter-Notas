@@ -16,6 +16,8 @@ class HomeBloc extends BlocBase {
   final StreamController<bool> _streamIsSelected = StreamController<bool>();
   Stream<bool> get isSelected => _streamIsSelected.stream;
 
+  bool get isSeleting => _isSelected;
+
   HomeBloc() {
     findAll();
   }

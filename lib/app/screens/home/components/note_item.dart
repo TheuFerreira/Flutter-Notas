@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_notas/app/app_module.dart';
 import 'package:flutter_notas/app/screens/home/components/note_item_block.dart';
+import 'package:flutter_notas/app/screens/home/home_bloc.dart';
+import 'package:flutter_notas/app/screens/save/save_widget.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
 class NoteItem extends StatelessWidget {
@@ -22,6 +25,29 @@ class NoteItem extends StatelessWidget {
             bool isSelected = snapshot.data as bool;
 
             return ListTile(
+              onTap: () {
+                bool isSelecting = AppModule.to.bloc<HomeBloc>().isSeleting;
+
+                if (isSelecting) {
+                  bloc.changeSelection();
+                  onLongPress!(note);
+                  return;
+                }
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SaveView(
+                        note,
+                        onAction: () async {
+                          await AppModule.to.bloc<HomeBloc>().findAll();
+                        },
+                      );
+                    },
+                  ),
+                );
+              },
               selected: isSelected,
               title: Text(
                 note.title != '' ? note.title! : note.description!,

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/screens/save/save_bloc.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
-class SaveView extends StatelessWidget {
+class SaveView extends StatefulWidget {
   final NoteModel note;
-  final SaveBloc bloc = SaveBloc();
   final Function()? onAction;
 
   SaveView(
@@ -14,25 +13,39 @@ class SaveView extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _SaveViewState createState() => _SaveViewState();
+}
+
+class _SaveViewState extends State<SaveView> {
+  SaveBloc bloc = SaveBloc();
+
+  @override
+  void initState() {
+    bloc.setValues(widget.note);
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          note.id != null ? 'Editar Anotação' : 'Nova Anotação',
+          widget.note.id != null ? 'Editar Anotação' : 'Nova Anotação',
         ),
         actions: [
-          if (note.id != null)
+          if (widget.note.id != null)
             IconButton(
               onPressed: () {
-                bloc.delete(context, note);
-                onAction!();
+                bloc.delete(context, widget.note);
+                widget.onAction!();
               },
               icon: Icon(Icons.delete),
             ),
           IconButton(
             onPressed: () {
-              bloc.save(context, note);
-              onAction!();
+              bloc.save(context, widget.note);
+              widget.onAction!();
             },
             icon: Icon(Icons.check),
           ),

@@ -23,22 +23,6 @@ class HomeBloc extends BlocBase {
   Future findAll() async {
     _notes = await _noteDAO.findAll();
 
-    NoteModel note1 = NoteModel.fromJson({
-      'id': 1,
-      'title': 'título',
-      'description': 'description',
-    });
-
-    _notes.add(note1);
-
-    NoteModel note2 = NoteModel.fromJson({
-      'id': 2,
-      'title': '',
-      'description': 'description',
-    });
-
-    _notes.add(note2);
-
     _streamNotes.add(_notes);
   }
 
@@ -63,11 +47,19 @@ class HomeBloc extends BlocBase {
   }
 
   void deleteSelected() {
-    _selectedNotes.forEach((element) => _notes.remove(element));
+    _selectedNotes.forEach((element) async {
+      _notes.remove(element);
+      await _noteDAO.delete(element);
+    });
     _streamNotes.add(_notes);
 
     _selectedNotes = [];
     _isSelected = _selectedNotes.length > 0;
     _streamIsSelected.add(_isSelected);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

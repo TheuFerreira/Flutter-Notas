@@ -1,51 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_notas/models/note_model.dart';
+import 'package:flutter_notas/app/screens/save/save_bloc.dart';
+import 'package:flutter_notas/app/shared/models/note_model.dart';
 
-import 'package:provider/provider.dart';
-
-class SaveView extends StatefulWidget {
+class SaveView extends StatelessWidget {
   final NoteModel note;
+  final SaveBloc bloc = SaveBloc();
+  final Function()? onAction;
 
-  const SaveView(this.note, {Key? key}) : super(key: key);
-
-  @override
-  _SaveViewState createState() => _SaveViewState();
-}
-
-class _SaveViewState extends State<SaveView> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  bool _isEditing = false;
-
-  @override
-  void initState() {
-    if (widget.note.id != null) {
-      _titleController.text = widget.note.title!;
-      _descriptionController.text = widget.note.description!;
-    }
-
-    _isEditing = widget.note.id != null;
-
-    super.initState();
-  }
+  SaveView(
+    this.note, {
+    Key? key,
+    this.onAction,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //HomeController controller = context.watch<HomeController>();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEditing ? 'Editar Anotação' : 'Nova Anotação',
+          note.id != null ? 'Editar Anotação' : 'Nova Anotação',
         ),
         actions: [
-          if (_isEditing)
+          if (note.id != null)
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                bloc.delete(context, note);
+                onAction!();
+              },
               icon: Icon(Icons.delete),
             ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              bloc.save(context, note);
+              onAction!();
+            },
             icon: Icon(Icons.check),
           ),
         ],
@@ -56,14 +44,14 @@ class _SaveViewState extends State<SaveView> {
           child: Column(
             children: [
               TextField(
-                controller: _titleController,
+                controller: bloc.titleController,
                 decoration: InputDecoration(
                   hintText: 'Título',
                 ),
                 style: TextStyle(fontSize: 16.0),
               ),
               TextField(
-                controller: _descriptionController,
+                controller: bloc.descriptionController,
                 keyboardType: TextInputType.multiline,
                 maxLines: 100,
                 decoration: InputDecoration(

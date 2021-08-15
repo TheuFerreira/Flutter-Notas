@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_notas/database/dao/note_dao.dart';
 import 'package:flutter_notas/models/note_model.dart';
 
 import 'package:provider/provider.dart';
@@ -18,7 +17,6 @@ class SaveView extends StatefulWidget {
 class _SaveViewState extends State<SaveView> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final NoteDAO _noteDAO = NoteDAO();
   bool _isEditing = false;
 
   @override

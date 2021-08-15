@@ -5,12 +5,12 @@ import 'package:provider/provider.dart';
 
 class NoteItem extends StatefulWidget {
   final NoteModel note;
-  final void Function()? onTap;
+  final void Function(NoteModel note)? onTap;
 
   const NoteItem(
     this.note, {
     Key? key,
-    this.onTap,
+    @required this.onTap,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class _NoteItemState extends State<NoteItem> {
                 return;
               }
 
-              widget.onTap!();
+              widget.onTap!(widget.note);
             },
             onLongPress: () {
               if (_isSelected) {

@@ -3,8 +3,6 @@ import 'package:flutter_notas/models/note_model.dart';
 
 import 'package:provider/provider.dart';
 
-import 'home/home_controller.dart';
-
 class SaveView extends StatefulWidget {
   final NoteModel note;
 
@@ -33,7 +31,7 @@ class _SaveViewState extends State<SaveView> {
 
   @override
   Widget build(BuildContext context) {
-    HomeController controller = context.watch<HomeController>();
+    //HomeController controller = context.watch<HomeController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -43,11 +41,11 @@ class _SaveViewState extends State<SaveView> {
         actions: [
           if (_isEditing)
             IconButton(
-              onPressed: () => _deleteNote(controller),
+              onPressed: () {},
               icon: Icon(Icons.delete),
             ),
           IconButton(
-            onPressed: () => _saveNote(controller),
+            onPressed: () {},
             icon: Icon(Icons.check),
           ),
         ],
@@ -78,28 +76,5 @@ class _SaveViewState extends State<SaveView> {
         ),
       ),
     );
-  }
-
-  void _deleteNote(HomeController controller) async {
-    await controller.delete(widget.note);
-
-    Navigator.pop(context, true);
-  }
-
-  void _saveNote(HomeController controller) async {
-    String title = _titleController.text;
-    String description = _descriptionController.text;
-
-    if (description == '' && title == '') {
-      Navigator.pop(context);
-      return;
-    }
-
-    widget.note.title = title;
-    widget.note.description = description;
-
-    await controller.save(widget.note);
-
-    Navigator.pop(context, true);
   }
 }

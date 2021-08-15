@@ -1,5 +1,5 @@
-import 'package:flutter_notas/database/app_database.dart';
-import 'package:flutter_notas/models/note_model.dart';
+import 'package:flutter_notas/app/shared/database/app_database.dart';
+import 'package:flutter_notas/app/shared/models/note_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class NoteDAO {

@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_notas/my_app.dart';
+import 'package:flutter_notas/app/app_module.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(AppModule());

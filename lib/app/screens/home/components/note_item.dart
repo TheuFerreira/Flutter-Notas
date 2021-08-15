@@ -3,14 +3,21 @@ import 'package:flutter_notas/app/app_module.dart';
 import 'package:flutter_notas/app/screens/home/components/note_item_block.dart';
 import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/screens/save/save_widget.dart';
+import 'package:flutter_notas/app/shared/animations/screen_transitions.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
 class NoteItem extends StatelessWidget {
   final NoteModel note;
   final NoteItemBloc bloc = NoteItemBloc();
+  final Function()? onTap;
   final Function(NoteModel note)? onLongPress;
 
-  NoteItem(this.note, {Key? key, @required this.onLongPress}) : super(key: key);
+  NoteItem(
+    this.note, {
+    Key? key,
+    @required this.onTap,
+    @required this.onLongPress,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +41,7 @@ class NoteItem extends StatelessWidget {
                   return;
                 }
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SaveView(
-                        note,
-                        onAction: () async {
-                          await AppModule.to.bloc<HomeBloc>().findAll();
-                        },
-                      );
-                    },
-                  ),
-                );
+                onTap!();
               },
               selected: isSelected,
               title: Text(

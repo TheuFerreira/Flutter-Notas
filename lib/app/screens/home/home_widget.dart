@@ -3,6 +3,7 @@ import 'package:flutter_notas/app/app_module.dart';
 import 'package:flutter_notas/app/screens/home/components/note_item.dart';
 import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/screens/save/save_widget.dart';
+import 'package:flutter_notas/app/shared/animations/screen_transitions.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -38,21 +39,7 @@ class HomeWidget extends StatelessWidget {
               }
 
               return IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SaveView(
-                          NoteModel(),
-                          onAction: () async {
-                            await AppModule.to.bloc<HomeBloc>().findAll();
-                          },
-                        );
-                      },
-                    ),
-                  );
-                },
+                onPressed: () => _toSaveScreen(context, NoteModel()),
                 icon: Icon(Icons.add),
               );
             },
@@ -112,11 +99,27 @@ class HomeWidget extends StatelessWidget {
               return NoteItem(
                 note,
                 key: UniqueKey(),
+                onTap: () => _toSaveScreen(context, note),
                 onLongPress: AppModule.to.bloc<HomeBloc>().setSelection,
               );
             },
           );
         },
+      ),
+    );
+  }
+
+  void _toSaveScreen(BuildContext context, NoteModel note) {
+    Navigator.push(
+      context,
+      ScreenTransition().rightToLeft(
+        context,
+        SaveView(
+          note,
+          onAction: () async {
+            await AppModule.to.bloc<HomeBloc>().findAll();
+          },
+        ),
       ),
     );
   }

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/app_module.dart';
 import 'package:flutter_notas/app/screens/home/components/note_item_block.dart';
 import 'package:flutter_notas/app/screens/home/home_bloc.dart';
-import 'package:flutter_notas/app/screens/save/save_widget.dart';
-import 'package:flutter_notas/app/shared/animations/screen_transitions.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
 class NoteItem extends StatelessWidget {

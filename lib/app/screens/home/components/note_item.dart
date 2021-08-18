@@ -23,13 +23,14 @@ class NoteItem extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
       child: Card(
         elevation: 2,
-        child: StreamBuilder<Object>(
+        child: StreamBuilder<bool>(
           stream: bloc.isSelected,
           initialData: false,
           builder: (context, snapshot) {
             bool isSelected = snapshot.data as bool;
 
             return ListTile(
+              selectedTileColor: Color.fromARGB(150, 255, 255, 0),
               onTap: () {
                 bool isSelecting = AppModule.to.bloc<HomeBloc>().isSeleting;
 
@@ -46,6 +47,9 @@ class NoteItem extends StatelessWidget {
                 note.title != '' ? note.title! : note.description!,
                 style: TextStyle(
                   fontSize: 16.0,
+                  color: isSelected
+                      ? Color.fromARGB(255, 125, 122, 21)
+                      : Colors.black,
                 ),
               ),
               onLongPress: () {
@@ -53,18 +57,10 @@ class NoteItem extends StatelessWidget {
                 onLongPress!(note);
               },
               trailing: isSelected
-                  ? InkWell(
-                      onTap: () {
-                        bloc.changeSelection();
-                        onLongPress!(note);
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: Colors.yellow,
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                        ),
-                      ),
+                  ? Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 32,
                     )
                   : null,
             );

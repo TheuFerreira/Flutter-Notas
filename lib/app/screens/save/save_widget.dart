@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_notas/app/screens/save/save_bloc.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 import 'package:flutter_notas/app/shared/services/dialog_service.dart';
@@ -87,6 +88,66 @@ class _SaveViewState extends State<SaveView> {
           ),
         ),
       ),
+      floatingActionButton: widget.note.id != null
+          ? FloatingActionButton(
+              backgroundColor: Color.fromARGB(150, 255, 255, 0),
+              onPressed: _showModalBottomSheet,
+              child: Icon(Icons.share),
+            )
+          : null,
+    );
+  }
+
+  void _showModalBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+                child: Text(
+                  'Compartilhar como',
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              leading: Icon(Icons.file_present),
+              title: Text('Arquivo TXT'),
+            ),
+            ListTile(
+              onTap: () {
+                bloc.copyText();
+
+                Navigator.pop(context);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text('Descrição da nota copiado com sucesso!!!'),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+              leading: Icon(Icons.text_snippet),
+              title: Text('Texto Copiável'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

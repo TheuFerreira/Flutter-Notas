@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_notas/app/shared/database/dao/note_dao.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
@@ -34,5 +35,9 @@ class SaveBloc {
     await _noteDAO.delete(note);
 
     Navigator.pop(context);
+  }
+
+  void copyText() {
+    Clipboard.setData(ClipboardData(text: descriptionController.text));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/screens/save/save_bloc.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
+import 'package:flutter_notas/app/shared/services/dialog_service.dart';
 
 class SaveView extends StatefulWidget {
   final NoteModel note;
@@ -17,7 +18,8 @@ class SaveView extends StatefulWidget {
 }
 
 class _SaveViewState extends State<SaveView> {
-  SaveBloc bloc = SaveBloc();
+  final SaveBloc bloc = SaveBloc();
+  final DialogService _dialogSerice = DialogService();
 
   @override
   void initState() {
@@ -36,7 +38,16 @@ class _SaveViewState extends State<SaveView> {
         actions: [
           if (widget.note.id != null)
             IconButton(
-              onPressed: () {
+              onPressed: () async {
+                var result = await _dialogSerice.showAlertDialog(
+                    context,
+                    'Confirmação',
+                    'Tem certeza de que deseja excluir as notas selecionadas?');
+
+                if (result == null) {
+                  return;
+                }
+
                 bloc.delete(context, widget.note);
                 widget.onAction!();
               },

@@ -5,9 +5,12 @@ import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/screens/save/save_widget.dart';
 import 'package:flutter_notas/app/shared/animations/screen_transitions.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
+import 'package:flutter_notas/app/shared/services/dialog_service.dart';
 
 class HomeWidget extends StatelessWidget {
   HomeWidget({Key? key}) : super(key: key);
+
+  final DialogService _dialogSerice = DialogService();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,18 @@ class HomeWidget extends StatelessWidget {
                         icon: Icon(Icons.clear),
                       ),
                       IconButton(
-                        onPressed: AppModule.to.bloc<HomeBloc>().deleteSelected,
+                        onPressed: () async {
+                          var result = await _dialogSerice.showAlertDialog(
+                              context,
+                              'Confirmação',
+                              'Tem certeza de que deseja excluir as notas selecionadas?');
+
+                          if (result == null) {
+                            return;
+                          }
+
+                          AppModule.to.bloc<HomeBloc>().deleteSelected();
+                        },
                         icon: Icon(Icons.delete),
                       ),
                     ],

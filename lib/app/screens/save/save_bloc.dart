@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_notas/app/shared/database/dao/note_dao.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SaveBloc {
   final TextEditingController titleController = TextEditingController();
@@ -35,6 +39,16 @@ class SaveBloc {
     await _noteDAO.delete(note);
 
     Navigator.pop(context);
+  }
+
+  Future shareFile() async {
+    Directory temporaryDirectory = await getTemporaryDirectory();
+    String path = temporaryDirectory.path + "/notas.txt";
+
+    File file = File(path);
+    file.writeAsString(descriptionController.text);
+
+    await Share.shareFiles([path]);
   }
 
   void copyText() {

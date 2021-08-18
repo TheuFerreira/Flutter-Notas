@@ -117,7 +117,9 @@ class _SaveViewState extends State<SaveView> {
               ),
             ),
             ListTile(
-              onTap: () {
+              onTap: () async {
+                await bloc.shareFile();
+
                 Navigator.pop(context);
               },
               leading: Icon(Icons.file_present),

@@ -3,6 +3,7 @@ import 'package:flutter_notas/app/app_module.dart';
 import 'package:flutter_notas/app/screens/home/components/note_item.dart';
 import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/screens/save/save_widget.dart';
+import 'package:flutter_notas/app/screens/settings/settings_widget.dart';
 import 'package:flutter_notas/app/shared/animations/screen_transitions.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 import 'package:flutter_notas/app/shared/services/dialog_service.dart';
@@ -53,8 +54,15 @@ class HomeWidget extends StatelessWidget {
               }
 
               return IconButton(
-                onPressed: () => _toSaveScreen(context, NoteModel()),
-                icon: Icon(Icons.add),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    ScreenTransition().rightToLeft(
+                      context,
+                      SettingsWidget(),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.settings),
               );
             },
           ),
@@ -119,6 +127,11 @@ class HomeWidget extends StatelessWidget {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(150, 255, 255, 0),
+        onPressed: () => _toSaveScreen(context, NoteModel()),
+        child: Icon(Icons.add),
       ),
     );
   }

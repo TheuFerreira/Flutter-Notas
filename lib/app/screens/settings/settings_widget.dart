@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_notas/app/screens/settings/settings_bloc.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 
 class SettingsWidget extends StatefulWidget {
@@ -9,9 +10,7 @@ class SettingsWidget extends StatefulWidget {
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
-  final List<String> typeThemes = ['Sistema (automático)', 'Claro', 'Escuro'];
-
-  int selectedTheme = 0;
+  SettingsBloc bloc = SettingsBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +30,20 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            RadioGroup<String>.builder(
-              spacebetween: 45,
-              groupValue: typeThemes[selectedTheme],
-              items: typeThemes,
-              itemBuilder: (item) => RadioButtonBuilder(item),
-              onChanged: (value) {
-                final int index = typeThemes.indexOf(value!);
+            StreamBuilder<String>(
+                stream: bloc.valueTheme,
+                initialData: 'Sistema (automático)',
+                builder: (context, snapshot) {
+                  String valueTheme = snapshot.data as String;
 
-                setState(() => selectedTheme = index);
-              },
-            ),
+                  return RadioGroup<String>.builder(
+                    spacebetween: 45,
+                    groupValue: valueTheme,
+                    items: bloc.themes,
+                    itemBuilder: (item) => RadioButtonBuilder(item),
+                    onChanged: bloc.setTheme,
+                  );
+                }),
           ],
         ),
       ),

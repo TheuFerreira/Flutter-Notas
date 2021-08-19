@@ -90,9 +90,11 @@ class _SaveViewState extends State<SaveView> {
       ),
       floatingActionButton: widget.note.id != null
           ? FloatingActionButton(
-              backgroundColor: Color.fromARGB(150, 255, 255, 0),
               onPressed: _showModalBottomSheet,
-              child: Icon(Icons.share),
+              child: Icon(
+                Icons.share,
+                color: Colors.white,
+              ),
             )
           : null,
     );

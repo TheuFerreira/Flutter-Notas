@@ -6,9 +6,37 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(ThemeData.dark().primaryColor);
     return MaterialApp(
       title: 'Notas',
-      theme: ThemeData(primaryColor: Colors.white),
+      theme: true != true
+          ? ThemeData(
+              brightness: Brightness.dark,
+              accentColor: Colors.yellowAccent[400],
+              accentColorBrightness: Brightness.dark,
+              iconTheme: IconThemeData(
+                color: Colors.yellowAccent[400],
+              ),
+              textTheme: TextTheme(
+                bodyText1: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            )
+          : ThemeData(
+              brightness: Brightness.light,
+              primaryColor: Colors.white,
+              accentColor: Colors.yellowAccent[400],
+              accentColorBrightness: Brightness.light,
+              iconTheme: IconThemeData(
+                color: Colors.yellowAccent[400],
+              ),
+              textTheme: TextTheme(
+                bodyText1: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
       home: HomeWidget(),
     );
   }

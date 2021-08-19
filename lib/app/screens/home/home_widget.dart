@@ -98,7 +98,7 @@ class HomeWidget extends StatelessWidget {
                   Icon(
                     Icons.bookmark,
                     size: 64.0,
-                    color: Colors.yellow,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                   Text(
                     'Nenhuma nota encontrada',
@@ -129,9 +129,11 @@ class HomeWidget extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(150, 255, 255, 0),
         onPressed: () => _toSaveScreen(context, NoteModel()),
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }

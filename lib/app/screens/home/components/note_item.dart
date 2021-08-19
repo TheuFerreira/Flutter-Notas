@@ -30,7 +30,7 @@ class NoteItem extends StatelessWidget {
             bool isSelected = snapshot.data as bool;
 
             return ListTile(
-              selectedTileColor: Color.fromARGB(150, 255, 255, 0),
+              selectedTileColor: Theme.of(context).accentColor,
               onTap: () {
                 bool isSelecting = AppModule.to.bloc<HomeBloc>().isSeleting;
 
@@ -48,8 +48,8 @@ class NoteItem extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.0,
                   color: isSelected
-                      ? Color.fromARGB(255, 125, 122, 21)
-                      : Colors.black,
+                      ? Colors.black
+                      : Theme.of(context).textTheme.bodyText1!.color,
                 ),
               ),
               onLongPress: () {

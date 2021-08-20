@@ -120,6 +120,13 @@ class _SaveViewState extends State<SaveView> {
             ),
             ListTile(
               onTap: () async {
+                // TODO: Falta Implementar
+              },
+              leading: Icon(Icons.description),
+              title: Text('Arquivo Notas'),
+            ),
+            ListTile(
+              onTap: () async {
                 await bloc.shareFile();
 
                 Navigator.pop(context);

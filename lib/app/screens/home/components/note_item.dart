@@ -43,13 +43,18 @@ class NoteItem extends StatelessWidget {
                 onTap!();
               },
               selected: isSelected,
-              title: Text(
-                note.title != '' ? note.title! : note.description!,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: isSelected
-                      ? Colors.black
-                      : Theme.of(context).textTheme.bodyText1!.color,
+              title: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  note.title != '' ? note.title! : note.description!,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: isSelected
+                        ? Colors.black
+                        : Theme.of(context).textTheme.bodyText1!.color,
+                  ),
                 ),
               ),
               onLongPress: () {

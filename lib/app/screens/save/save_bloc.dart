@@ -28,6 +28,7 @@ class SaveBloc {
     if (title != '' || description != '') {
       note.title = title;
       note.description = description;
+      note.lastModify = DateTime.now();
 
       await _noteDAO.save(note);
     }

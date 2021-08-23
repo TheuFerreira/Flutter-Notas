@@ -4,9 +4,10 @@ import 'package:flutter_notas/app/screens/home/components/note_item_block.dart';
 import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
+// ignore: must_be_immutable
 class NoteItem extends StatelessWidget {
   final NoteModel note;
-  final NoteItemBloc bloc = NoteItemBloc();
+  late NoteItemBloc bloc;
   final Function()? onTap;
   final Function(NoteModel note)? onLongPress;
 
@@ -15,7 +16,9 @@ class NoteItem extends StatelessWidget {
     Key? key,
     @required this.onTap,
     @required this.onLongPress,
-  }) : super(key: key);
+  }) : super(key: key) {
+    bloc = NoteItemBloc(note.lastModify!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +60,7 @@ class NoteItem extends StatelessWidget {
                   ),
                 ),
               ),
+              subtitle: Text('Última Alteração: ${bloc.lastModify}'),
               onLongPress: () {
                 bloc.changeSelection();
                 onLongPress!(note);

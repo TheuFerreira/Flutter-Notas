@@ -43,7 +43,7 @@ class SaveBloc {
 
   Future shareFile() async {
     Directory temporaryDirectory = await getTemporaryDirectory();
-    String path = temporaryDirectory.path + "/notas.txt";
+    String path = temporaryDirectory.path + "/nota.txt";
 
     File file = File(path);
     file.writeAsString(descriptionController.text);

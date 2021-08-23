@@ -22,6 +22,9 @@ class AppBloc extends BlocBase {
       } else {
         _isDarkMode = indexTheme != 1;
       }
+    } else {
+      _isDarkMode = SchedulerBinding.instance!.window.platformBrightness !=
+          Brightness.light;
     }
 
     _streamController.add(_isDarkMode);

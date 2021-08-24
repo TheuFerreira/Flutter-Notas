@@ -24,6 +24,68 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
+              'Fonte',
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            StreamBuilder<String>(
+              stream: bloc.valueFont,
+              initialData: 'Roboto',
+              builder: (context, snapshot) {
+                String value = snapshot.data as String;
+
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Fonte Padrão: '),
+                    DropdownButton<String>(
+                      value: value,
+                      onChanged: bloc.setFont,
+                      items: bloc.fonts.map(
+                        (String value) {
+                          return DropdownMenuItem<String>(
+                            child: Text(value),
+                            value: value,
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  ],
+                );
+              },
+            ),
+            StreamBuilder<bool>(
+              stream: bloc.valueBold,
+              initialData: false,
+              builder: (context, snapshot) {
+                bool value = snapshot.data as bool;
+
+                return RadioButton(
+                  description: 'Negrito',
+                  value: value,
+                  groupValue: true,
+                  onChanged: bloc.setBold,
+                );
+              },
+            ),
+            StreamBuilder<bool>(
+              stream: bloc.valueItalic,
+              initialData: false,
+              builder: (context, snapshot) {
+                bool value = snapshot.data as bool;
+
+                return RadioButton(
+                  description: 'Ítalico',
+                  value: value,
+                  groupValue: true,
+                  onChanged: bloc.setItalic,
+                );
+              },
+            ),
+            Divider(),
+            Text(
               'Tema Padrão',
               style: TextStyle(
                 fontSize: 16.0,

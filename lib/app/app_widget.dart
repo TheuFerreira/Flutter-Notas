@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/app_bloc.dart';
 import 'package:flutter_notas/app/app_module.dart';
 import 'package:flutter_notas/app/screens/home/home_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppWidget extends StatelessWidget {
   AppWidget({Key? key}) : super(key: key);
@@ -10,16 +11,25 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     AppModule.to.bloc<AppBloc>().loadTheme();
 
-    return StreamBuilder<bool>(
-        stream: AppModule.to.bloc<AppBloc>().isDarkMode,
-        initialData: false,
+    return StreamBuilder<List<dynamic>>(
+        stream: AppModule.to.bloc<AppBloc>().settings,
+        initialData: [false, 'Roboto', false, false],
         builder: (context, snapshot) {
-          bool isDarkMode = snapshot.data as bool;
+          List<dynamic> values = snapshot.data as List<dynamic>;
+          bool isDarkMode = values[0] as bool;
+          String font = values[1] as String;
+          bool bold = values[2] as bool;
+          bool italic = values[3] as bool;
 
           return MaterialApp(
             title: 'Notas',
             theme: isDarkMode
                 ? ThemeData(
+                    fontFamily: GoogleFonts.getFont(
+                      font,
+                      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+                      fontWeight: bold ? FontWeight.w700 : FontWeight.normal,
+                    ).fontFamily,
                     brightness: Brightness.dark,
                     accentColor: Colors.yellowAccent[400],
                     accentColorBrightness: Brightness.dark,
@@ -33,6 +43,11 @@ class AppWidget extends StatelessWidget {
                     ),
                   )
                 : ThemeData(
+                    fontFamily: GoogleFonts.getFont(
+                      font,
+                      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+                      fontWeight: bold ? FontWeight.w700 : FontWeight.normal,
+                    ).fontFamily,
                     brightness: Brightness.light,
                     primaryColor: Colors.white,
                     accentColor: Colors.yellowAccent[400],

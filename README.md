@@ -1,6 +1,6 @@
 # Notas (Mobile)
 
-<img width="128" src="./assets/icons/icon.png">
+<img width="128" src="./assets/images/notes.png">
 
 Notas é um Aplicativo de Anotações, que tem como objetivo permitir ao usuário realizar anotações no telefone, com apenas 1 clique ele já pode adicionar sua anotação. É possível estilizar o App, permitindo a escolha entre Tema Claro ou Escuro, e também customizar o aplicativo com uma fonte diferente, dentre as fontes disponíveis.<br><br>Notas está disponível atualmente, apenas para dispositivos Android.
 

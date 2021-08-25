@@ -93,19 +93,20 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               ),
             ),
             StreamBuilder<String>(
-                stream: bloc.valueTheme,
-                initialData: 'Sistema (automático)',
-                builder: (context, snapshot) {
-                  String valueTheme = snapshot.data as String;
+              stream: bloc.valueTheme,
+              initialData: 'Sistema (automático)',
+              builder: (context, snapshot) {
+                String valueTheme = snapshot.data as String;
 
-                  return RadioGroup<String>.builder(
-                    spacebetween: 45,
-                    groupValue: valueTheme,
-                    items: bloc.themes,
-                    itemBuilder: (item) => RadioButtonBuilder(item),
-                    onChanged: bloc.setTheme,
-                  );
-                }),
+                return RadioGroup<String>.builder(
+                  spacebetween: 45,
+                  groupValue: valueTheme,
+                  items: bloc.themes,
+                  itemBuilder: (item) => RadioButtonBuilder(item),
+                  onChanged: bloc.setTheme,
+                );
+              },
+            ),
           ],
         ),
       ),

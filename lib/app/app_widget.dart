@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/app_bloc.dart';
 import 'package:flutter_notas/app/app_module.dart';
 import 'package:flutter_notas/app/screens/home/home_widget.dart';
+import 'package:flutter_notas/app/shared/models/settings_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppWidget extends StatelessWidget {
@@ -9,60 +10,63 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppModule.to.bloc<AppBloc>().loadTheme();
+    AppModule.to.bloc<AppBloc>().loadSettings();
 
-    return StreamBuilder<List<dynamic>>(
-        stream: AppModule.to.bloc<AppBloc>().settings,
-        initialData: [false, 'Roboto', false, false],
-        builder: (context, snapshot) {
-          List<dynamic> values = snapshot.data as List<dynamic>;
-          bool isDarkMode = values[0] as bool;
-          String font = values[1] as String;
-          bool bold = values[2] as bool;
-          bool italic = values[3] as bool;
+    return StreamBuilder<SettingsModel>(
+      stream: AppModule.to.bloc<AppBloc>().settings,
+      initialData: SettingsModel(),
+      builder: (context, snapshot) {
+        SettingsModel settings = snapshot.data as SettingsModel;
 
-          return MaterialApp(
-            title: 'Notas',
-            theme: isDarkMode
-                ? ThemeData(
-                    fontFamily: GoogleFonts.getFont(
-                      font,
-                      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-                      fontWeight: bold ? FontWeight.w700 : FontWeight.normal,
-                    ).fontFamily,
-                    brightness: Brightness.dark,
-                    accentColor: Colors.yellowAccent[400],
-                    accentColorBrightness: Brightness.dark,
-                    iconTheme: IconThemeData(
-                      color: Colors.yellowAccent[400],
-                    ),
-                    textTheme: TextTheme(
-                      bodyText1: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                : ThemeData(
-                    fontFamily: GoogleFonts.getFont(
-                      font,
-                      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-                      fontWeight: bold ? FontWeight.w700 : FontWeight.normal,
-                    ).fontFamily,
-                    brightness: Brightness.light,
-                    primaryColor: Colors.white,
-                    accentColor: Colors.yellowAccent[400],
-                    accentColorBrightness: Brightness.light,
-                    iconTheme: IconThemeData(
-                      color: Colors.yellowAccent[400],
-                    ),
-                    textTheme: TextTheme(
-                      bodyText1: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-            home: HomeWidget(),
-          );
-        });
+        return MaterialApp(
+          title: 'Notas',
+          theme: settings.isDark ? _darkTheme(settings) : _lightTheme(settings),
+          home: HomeWidget(),
+        );
+      },
+    );
+  }
+
+  ThemeData _darkTheme(SettingsModel settings) {
+    return ThemeData(
+      fontFamily: _getFontFamily(settings),
+      brightness: Brightness.dark,
+      accentColor: Colors.yellowAccent[400],
+      accentColorBrightness: Brightness.dark,
+      iconTheme: IconThemeData(
+        color: Colors.yellowAccent[400],
+      ),
+      textTheme: TextTheme(
+        bodyText1: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  ThemeData _lightTheme(SettingsModel settings) {
+    return ThemeData(
+      fontFamily: _getFontFamily(settings),
+      brightness: Brightness.light,
+      primaryColor: Colors.white,
+      accentColor: Colors.yellowAccent[400],
+      accentColorBrightness: Brightness.light,
+      iconTheme: IconThemeData(
+        color: Colors.yellowAccent[400],
+      ),
+      textTheme: TextTheme(
+        bodyText1: TextStyle(
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
+
+  String? _getFontFamily(SettingsModel settings) {
+    return GoogleFonts.getFont(
+      settings.font,
+      fontStyle: settings.isItalic ? FontStyle.italic : FontStyle.normal,
+      fontWeight: settings.isBold ? FontWeight.w700 : FontWeight.normal,
+    ).fontFamily;
   }
 }

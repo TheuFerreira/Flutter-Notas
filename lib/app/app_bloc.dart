@@ -3,50 +3,45 @@ import 'dart:async';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_notas/app/shared/models/settings_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppBloc extends BlocBase {
-  bool _isDarkMode = false;
-  String _defaultFont = '';
-  bool _isBold = false;
-  bool _isItalic = false;
+  SettingsModel _settings = SettingsModel();
 
-  final StreamController<List<dynamic>> _streamController =
-      StreamController<List<dynamic>>();
-  Stream<List<dynamic>> get settings => _streamController.stream;
+  final StreamController<SettingsModel> _streamController =
+      StreamController<SettingsModel>();
+  Stream<SettingsModel> get settings => _streamController.stream;
 
-  void loadTheme() async {
+  void loadSettings() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    //await _prefs.clear();
 
     if (_prefs.containsKey("theme")) {
       int indexTheme = _prefs.getInt("theme")!;
       if (indexTheme == 0) {
-        _isDarkMode = SchedulerBinding.instance!.window.platformBrightness !=
-            Brightness.light;
+        _settings.isDark =
+            SchedulerBinding.instance!.window.platformBrightness !=
+                Brightness.light;
       } else {
-        _isDarkMode = indexTheme != 1;
+        _settings.isDark = indexTheme != 1;
       }
     } else {
-      _isDarkMode = SchedulerBinding.instance!.window.platformBrightness !=
+      _settings.isDark = SchedulerBinding.instance!.window.platformBrightness !=
           Brightness.light;
     }
 
-    _defaultFont = 'Roboto';
     if (_prefs.containsKey("font")) {
-      _defaultFont = _prefs.getString("font")!;
+      _settings.font = _prefs.getString("font")!;
     }
 
-    _isBold = false;
     if (_prefs.containsKey("bold")) {
-      _isBold = _prefs.getBool("bold")!;
+      _settings.isBold = _prefs.getBool("bold")!;
     }
 
-    _isItalic = false;
     if (_prefs.containsKey("italic")) {
-      _isItalic = _prefs.getBool("italic")!;
+      _settings.isItalic = _prefs.getBool("italic")!;
     }
 
-    _streamController.add([_isDarkMode, _defaultFont, _isBold, _isItalic]);
+    _streamController.add(_settings);
   }
 }

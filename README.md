@@ -1,16 +1,19 @@
-# flutter_notas
+# Notas (Mobile)
 
-A new Flutter project.
+<img width="128" src="./assets/icons/icon.png">
 
-## Getting Started
+Notas é um Aplicativo de Anotações, que tem como objetivo permitir ao usuário realizar anotações no telefone, com apenas 1 clique ele já pode adicionar sua anotação. É possível estilizar o App, permitindo a escolha entre Tema Claro ou Escuro, e também customizar o aplicativo com uma fonte diferente, dentre as fontes disponíveis.<br><br>Notas está disponível atualmente, apenas para dispositivos Android.
 
-This project is a starting point for a Flutter application.
+## Build status
 
-A few resources to get you started if this is your first Flutter project:
+| Branch | Status |
+|---|---|
+| Instalador | [V1.0.0](https://drive.google.com/file/d/18-6CQtgzd6e5ygZAUrV14Mi4VRuZFUMQ/view?usp=sharing) | 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Notas de Versão
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Versão 1.0.0:
+ #### Versão inicial do Aplicativo.
+ - Feature: Possibilidade de compartilhar uma nota, sendo ela em arquivo TXT ou copiando todo o texto.
+ - Feature: Trocar entre Temas, sendo eles Escuro ou Claro.
+ - Feature: Trocar fonte, e definir se a fonte estará em Ítalico ou Negrito.

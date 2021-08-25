@@ -21,7 +21,7 @@ class NoteDAO {
     await db.execute(
       'UPDATE note SET status = 0 WHERE id_note = ?',
       [note.id],
-    );
+    ).timeout(Duration(seconds: 5));
   }
 
   Future save(NoteModel note) async {
@@ -34,7 +34,12 @@ class NoteDAO {
 
   Future _insert(NoteModel note) async {
     Database db = await _appDatabase.getDatabase();
-    await db.insert('note', note.toJson());
+    await db
+        .insert(
+          'note',
+          note.toJson(),
+        )
+        .timeout(Duration(seconds: 5));
   }
 
   Future _update(NoteModel note) async {
@@ -44,6 +49,6 @@ class NoteDAO {
       note.toJson(),
       where: 'id_note = ?',
       whereArgs: [note.id],
-    );
+    ).timeout(Duration(seconds: 5));
   }
 }

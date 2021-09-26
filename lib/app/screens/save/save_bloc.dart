@@ -26,8 +26,8 @@ class SaveBloc {
     String description = descriptionController.text;
 
     if (title != '' || description != '') {
-      note.title = title;
-      note.description = description;
+      note.title = title.trim();
+      note.description = description.trim();
       note.lastModify = DateTime.now();
 
       await _noteDAO.save(note);

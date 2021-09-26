@@ -31,8 +31,10 @@ class AppWidget extends StatelessWidget {
     return ThemeData(
       fontFamily: _getFontFamily(settings),
       brightness: Brightness.dark,
-      accentColor: Colors.yellowAccent[400],
-      accentColorBrightness: Brightness.dark,
+      colorScheme: ColorScheme.dark(
+        secondary: Color(0xFFFFEA00),
+        brightness: Brightness.dark,
+      ),
       iconTheme: IconThemeData(
         color: Colors.yellowAccent[400],
       ),
@@ -48,9 +50,11 @@ class AppWidget extends StatelessWidget {
     return ThemeData(
       fontFamily: _getFontFamily(settings),
       brightness: Brightness.light,
-      primaryColor: Colors.white,
-      accentColor: Colors.yellowAccent[400],
-      accentColorBrightness: Brightness.light,
+      colorScheme: ColorScheme.light(
+        primary: Colors.white,
+        secondary: Color(0xFFFFEA00),
+        brightness: Brightness.light,
+      ),
       iconTheme: IconThemeData(
         color: Colors.yellowAccent[400],
       ),

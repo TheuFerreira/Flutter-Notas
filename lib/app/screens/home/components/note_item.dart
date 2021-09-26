@@ -33,7 +33,7 @@ class NoteItem extends StatelessWidget {
             bool isSelected = snapshot.data as bool;
 
             return ListTile(
-              selectedTileColor: Theme.of(context).accentColor,
+              selectedTileColor: Theme.of(context).colorScheme.secondary,
               onTap: () {
                 bool isSelecting = AppModule.to.bloc<HomeBloc>().isSeleting;
 

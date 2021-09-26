@@ -33,8 +33,18 @@ class _SaveViewState extends State<SaveView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).textTheme.bodyText1!.color,
+          ),
+        ),
         title: Text(
           widget.note.id != null ? 'Editar Anotação' : 'Nova Anotação',
+          style: TextStyle(
+            color: Theme.of(context).textTheme.bodyText1!.color,
+          ),
         ),
         actions: [
           if (widget.note.id != null)
@@ -52,14 +62,20 @@ class _SaveViewState extends State<SaveView> {
                 bloc.delete(context, widget.note);
                 widget.onAction!();
               },
-              icon: Icon(Icons.delete),
+              icon: Icon(
+                Icons.delete,
+                color: Theme.of(context).textTheme.bodyText1!.color,
+              ),
             ),
           IconButton(
             onPressed: () {
               bloc.save(context, widget.note);
               widget.onAction!();
             },
-            icon: Icon(Icons.check),
+            icon: Icon(
+              Icons.check,
+              color: Theme.of(context).textTheme.bodyText1!.color,
+            ),
           ),
         ],
       ),

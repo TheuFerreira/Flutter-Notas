@@ -16,7 +16,19 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Configurações'),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).textTheme.bodyText1!.color,
+          ),
+        ),
+        title: Text(
+          'Configurações',
+          style: TextStyle(
+            color: Theme.of(context).textTheme.bodyText1!.color,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),

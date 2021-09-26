@@ -17,7 +17,12 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notas'),
+        title: Text(
+          'Notas',
+          style: TextStyle(
+            color: Theme.of(context).textTheme.bodyText1!.color,
+          ),
+        ),
         actions: [
           StreamBuilder(
             stream: AppModule.to.bloc<HomeBloc>().isSelected,
@@ -31,7 +36,10 @@ class HomeWidget extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: AppModule.to.bloc<HomeBloc>().clearSelection,
-                        icon: Icon(Icons.clear),
+                        icon: Icon(
+                          Icons.clear,
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                        ),
                       ),
                       IconButton(
                         onPressed: () async {
@@ -46,7 +54,10 @@ class HomeWidget extends StatelessWidget {
 
                           AppModule.to.bloc<HomeBloc>().deleteSelected();
                         },
-                        icon: Icon(Icons.delete),
+                        icon: Icon(
+                          Icons.delete,
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                        ),
                       ),
                     ],
                   );
@@ -62,7 +73,10 @@ class HomeWidget extends StatelessWidget {
                     ),
                   );
                 },
-                icon: Icon(Icons.settings),
+                icon: Icon(
+                  Icons.settings,
+                  color: Theme.of(context).textTheme.bodyText1!.color,
+                ),
               );
             },
           ),

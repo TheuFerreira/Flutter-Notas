@@ -1,13 +1,7 @@
-import 'dart:async';
-
 import 'package:intl/intl.dart';
 
 class NoteItemBloc {
-  bool _isSelected = false;
   late String lastModify;
-
-  final StreamController<bool> _streamController = StreamController<bool>();
-  Stream<bool> get isSelected => _streamController.stream;
 
   NoteItemBloc(DateTime date) {
     DateFormat df = DateFormat('dd/MM/yyyy');
@@ -21,10 +15,5 @@ class NoteItemBloc {
     } else {
       lastModify = dateNote;
     }
-  }
-
-  void changeSelection() {
-    _isSelected = !_isSelected;
-    _streamController.add(_isSelected);
   }
 }

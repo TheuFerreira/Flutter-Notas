@@ -33,6 +33,7 @@ class _SaveViewState extends State<SaveView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(
@@ -79,30 +80,40 @@ class _SaveViewState extends State<SaveView> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            children: [
-              TextField(
-                controller: bloc.titleController,
-                decoration: InputDecoration(
-                  hintText: 'Título',
-                ),
-                style: TextStyle(fontSize: 16.0),
-              ),
-              TextField(
-                controller: bloc.descriptionController,
-                keyboardType: TextInputType.multiline,
-                maxLines: 100,
-                decoration: InputDecoration(
-                  hintText: 'Descrição',
-                ),
-                style: TextStyle(fontSize: 16.0),
-              ),
-            ],
+      body: Stack(
+        children: [
+          Hero(
+            tag: "Background_${widget.note.id}",
+            child: Container(
+              color: Colors.white,
+            ),
           ),
-        ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: bloc.titleController,
+                    decoration: InputDecoration(
+                      hintText: 'Título',
+                    ),
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  TextField(
+                    controller: bloc.descriptionController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 100,
+                    decoration: InputDecoration(
+                      hintText: 'Descrição',
+                    ),
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: widget.note.id != null
           ? FloatingActionButton(

@@ -20,26 +20,64 @@ class NoteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-      child: Card(
-        elevation: 2,
-        child: ListTile(
-          selectedTileColor: Theme.of(context).colorScheme.secondary,
-          onTap: onTap,
-          title: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text(
-              note.title != '' ? note.title! : note.description!,
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Theme.of(context).textTheme.bodyText1!.color,
+      child: InkWell(
+        onTap: onTap,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        child: Hero(
+          tag: "Background_${note.id}",
+          child: Material(
+            elevation: 2,
+            borderRadius: BorderRadius.circular(16.0),
+            color: Colors.white,
+            clipBehavior: Clip.antiAlias,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                    child: _text(note.title!, context),
+                    visible: note.title != '',
+                  ),
+                  Visibility(
+                    child: _text(note.description!, context),
+                    visible: note.title == '',
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'Última Alteração: ${bloc.lastModify}',
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          subtitle: Text('Última Alteração: ${bloc.lastModify}'),
         ),
       ),
     );
   }
+
+  Widget _text(String data, BuildContext context) {
+    return Text(
+      data,
+      maxLines: 4,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+        fontSize: 16.0,
+        color: Theme.of(context).textTheme.bodyText1!.color,
+      ),
+    );
+  }
 }
+/* 
+Card(
+        elevation: 2,
+        child: ListTile(
+          selectedTileColor: Theme.of(context).colorScheme.secondary,
+        ),
+      )
+*/

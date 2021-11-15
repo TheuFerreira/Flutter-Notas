@@ -33,7 +33,7 @@ dependencies:
   intl: ^0.17.0
   google_fonts: ^2.1.0
   local_hero: ^0.2.0
-  
+  local_auth: ^1.1.8
   
 dev_dependencies:
   flutter_test:

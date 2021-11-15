@@ -32,96 +32,123 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Fonte',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Fonte',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            StreamBuilder<String>(
-              stream: bloc.valueFont,
-              initialData: 'Roboto',
-              builder: (context, snapshot) {
-                String value = snapshot.data as String;
+              StreamBuilder<String>(
+                stream: bloc.valueFont,
+                initialData: 'Roboto',
+                builder: (context, snapshot) {
+                  String value = snapshot.data as String;
 
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Fonte Padrão: '),
-                    DropdownButton<String>(
-                      value: value,
-                      onChanged: bloc.setFont,
-                      items: bloc.fonts.map(
-                        (String value) {
-                          return DropdownMenuItem<String>(
-                            child: Text(value),
-                            value: value,
-                          );
-                        },
-                      ).toList(),
-                    ),
-                  ],
-                );
-              },
-            ),
-            StreamBuilder<bool>(
-              stream: bloc.valueBold,
-              initialData: false,
-              builder: (context, snapshot) {
-                bool value = snapshot.data as bool;
-
-                return RadioButton(
-                  description: 'Negrito',
-                  value: value,
-                  groupValue: true,
-                  onChanged: bloc.setBold,
-                );
-              },
-            ),
-            StreamBuilder<bool>(
-              stream: bloc.valueItalic,
-              initialData: false,
-              builder: (context, snapshot) {
-                bool value = snapshot.data as bool;
-
-                return RadioButton(
-                  description: 'Ítalico',
-                  value: value,
-                  groupValue: true,
-                  onChanged: bloc.setItalic,
-                );
-              },
-            ),
-            Divider(),
-            Text(
-              'Tema Padrão',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Fonte Padrão: '),
+                      DropdownButton<String>(
+                        value: value,
+                        onChanged: bloc.setFont,
+                        items: bloc.fonts.map(
+                          (String value) {
+                            return DropdownMenuItem<String>(
+                              child: Text(value),
+                              value: value,
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ],
+                  );
+                },
               ),
-            ),
-            StreamBuilder<String>(
-              stream: bloc.valueTheme,
-              initialData: 'Sistema (automático)',
-              builder: (context, snapshot) {
-                String valueTheme = snapshot.data as String;
+              StreamBuilder<bool>(
+                stream: bloc.valueBold,
+                initialData: false,
+                builder: (context, snapshot) {
+                  bool value = snapshot.data as bool;
 
-                return RadioGroup<String>.builder(
-                  spacebetween: 45,
-                  groupValue: valueTheme,
-                  items: bloc.themes,
-                  itemBuilder: (item) => RadioButtonBuilder(item),
-                  onChanged: bloc.setTheme,
-                );
-              },
-            ),
-          ],
+                  return RadioButton(
+                    description: 'Negrito',
+                    value: value,
+                    groupValue: true,
+                    onChanged: bloc.setBold,
+                  );
+                },
+              ),
+              StreamBuilder<bool>(
+                stream: bloc.valueItalic,
+                initialData: false,
+                builder: (context, snapshot) {
+                  bool value = snapshot.data as bool;
+
+                  return RadioButton(
+                    description: 'Ítalico',
+                    value: value,
+                    groupValue: true,
+                    onChanged: bloc.setItalic,
+                  );
+                },
+              ),
+              Divider(),
+              Text(
+                'Tema Padrão',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              StreamBuilder<String>(
+                stream: bloc.valueTheme,
+                initialData: 'Sistema (automático)',
+                builder: (context, snapshot) {
+                  String valueTheme = snapshot.data as String;
+
+                  return RadioGroup<String>.builder(
+                    spacebetween: 45,
+                    groupValue: valueTheme,
+                    items: bloc.themes,
+                    itemBuilder: (item) => RadioButtonBuilder(item),
+                    onChanged: bloc.setTheme,
+                  );
+                },
+              ),
+              Divider(),
+              Text(
+                'Segurança',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('PIN ou Biometria ao Abrir o App'),
+                  StreamBuilder<bool>(
+                    stream: bloc.valueAuth,
+                    initialData: false,
+                    builder: (context, snapshot) {
+                      final value = snapshot.data!;
+                      return Switch(
+                        value: value,
+                        onChanged: bloc.setSecurity,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

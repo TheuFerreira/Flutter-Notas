@@ -4,6 +4,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter_notas/app/app_bloc.dart';
 import 'package:flutter_notas/app/app_module.dart';
 import 'package:flutter_notas/app/shared/models/settings_model.dart';
+import 'package:flutter_notas/app/shared/services/authentication_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsBloc extends BlocBase {
@@ -31,6 +32,9 @@ class SettingsBloc extends BlocBase {
 
   final StreamController<bool> _streamItalic = StreamController<bool>();
   Stream<bool> get valueItalic => _streamItalic.stream;
+
+  final StreamController<bool> _streamAuth = StreamController<bool>();
+  Stream<bool> get valueAuth => _streamAuth.stream;
 
   SettingsBloc() {
     SettingsModel _settings = SettingsModel();
@@ -63,6 +67,12 @@ class SettingsBloc extends BlocBase {
         }
 
         _streamItalic.add(_settings.isItalic);
+
+        if (_prefs.containsKey('authentication')) {
+          _settings.hasAuthentication = _prefs.getBool('authentication')!;
+        }
+
+        _streamAuth.add(_settings.hasAuthentication);
       },
     );
   }
@@ -106,5 +116,22 @@ class SettingsBloc extends BlocBase {
     _prefs.setBool("italic", isItalic);
 
     AppModule.to.bloc<AppBloc>().loadSettings();
+  }
+
+  void setSecurity(bool? value) async {
+    AuthenticationService auth = AuthenticationService();
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    if (value!) {
+      bool isSupported = await auth.isSupported();
+      value = isSupported;
+
+      if (isSupported) {
+        bool isAuthenticated = await auth.authenticate();
+        value = isAuthenticated;
+      }
+    }
+
+    _prefs.setBool("authentication", value);
+    _streamAuth.add(value);
   }
 }

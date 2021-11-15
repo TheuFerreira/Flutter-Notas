@@ -42,6 +42,10 @@ class AppBloc extends BlocBase {
       _settings.isItalic = _prefs.getBool("italic")!;
     }
 
+    if (_prefs.containsKey("authentication")) {
+      _settings.hasAuthentication = _prefs.getBool("authentication")!;
+    }
+
     _streamController.add(_settings);
   }
 }

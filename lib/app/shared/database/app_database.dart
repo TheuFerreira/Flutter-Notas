@@ -1,3 +1,4 @@
+import 'package:flutter_notas/app/shared/database/migrations/migrations.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AppDatabase {
@@ -7,20 +8,20 @@ class AppDatabase {
 
     return openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
+      onDowngrade: onDatabaseDowngradeDelete,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (newVersion == 2) {
+          final batch = db.batch();
+          version2.forEach((script) => batch.execute(script));
+          await batch.commit();
+        }
+      },
     );
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    await db.execute(''
-        'CREATE TABLE note ( '
-        'id_note INTEGER, '
-        'title TEXT, '
-        'description TEXT, '
-        'last_modify DATE, '
-        'status	INTEGER NOT NULL DEFAULT 1, '
-        'PRIMARY KEY("id_note" AUTOINCREMENT) '
-        ');');
+    version1.forEach((script) async => db.execute(script));
   }
 }

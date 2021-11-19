@@ -3,6 +3,7 @@ class NoteModel {
   String? title;
   String? description;
   DateTime? lastModify;
+  int? theme;
 
   NoteModel();
 
@@ -10,14 +11,16 @@ class NoteModel {
       : id = json['id_note'],
         title = json['title'],
         description = json['description'],
-        lastModify = DateTime.fromMillisecondsSinceEpoch(json['last_modify']);
+        lastModify = DateTime.fromMillisecondsSinceEpoch(json['last_modify']),
+        theme = json['theme'];
 
   Map<String, dynamic> toJson() {
     return {
       'id_note': id,
       'title': title,
       'description': description,
-      'last_modify': lastModify!.millisecondsSinceEpoch
+      'last_modify': lastModify!.millisecondsSinceEpoch,
+      'theme': theme,
     };
   }
 }

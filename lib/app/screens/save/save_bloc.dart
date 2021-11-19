@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_notas/app/shared/database/dao/note_dao.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:share_plus/share_plus.dart';
 
 class SaveBloc {
@@ -12,13 +14,22 @@ class SaveBloc {
   final TextEditingController descriptionController = TextEditingController();
   final NoteDAO _noteDAO = NoteDAO();
 
+  late int _currentTheme;
+  final _streamCurrentTheme = BehaviorSubject<int>();
+  Stream<int> get currentTheme => _streamCurrentTheme.stream;
+
   SaveBloc();
 
   setValues(NoteModel note) {
+    _currentTheme = 0;
+
     if (note.id != null) {
       titleController.text = note.title!;
       descriptionController.text = note.description!;
+      _currentTheme = note.theme == null ? 0 : note.theme!;
     }
+
+    _streamCurrentTheme.add(_currentTheme);
   }
 
   void save(BuildContext context, NoteModel note) async {
@@ -29,6 +40,8 @@ class SaveBloc {
       note.title = title.trim();
       note.description = description.trim();
       note.lastModify = DateTime.now();
+      note.theme = _currentTheme;
+      print(note.theme);
 
       await _noteDAO.save(note);
     }
@@ -54,5 +67,10 @@ class SaveBloc {
 
   void copyText() {
     Clipboard.setData(ClipboardData(text: descriptionController.text));
+  }
+
+  void changeTheme(int? newTheme) {
+    _currentTheme = newTheme!;
+    _streamCurrentTheme.add(newTheme);
   }
 }

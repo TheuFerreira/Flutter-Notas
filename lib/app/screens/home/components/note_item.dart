@@ -73,11 +73,3 @@ class NoteItem extends StatelessWidget {
     );
   }
 }
-/* 
-Card(
-        elevation: 2,
-        child: ListTile(
-          selectedTileColor: Theme.of(context).colorScheme.secondary,
-        ),
-      )
-*/

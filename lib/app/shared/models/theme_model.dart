@@ -5,6 +5,7 @@ class ThemeModel {
   final Color? fontColor;
   final Color? bgColor;
   final Color? hintColor;
+  final Color? lastModifyColor;
   final String? bgAsset;
 
   const ThemeModel({
@@ -12,6 +13,7 @@ class ThemeModel {
     this.fontColor,
     this.bgColor,
     this.hintColor,
+    this.lastModifyColor,
     this.bgAsset,
   });
 }

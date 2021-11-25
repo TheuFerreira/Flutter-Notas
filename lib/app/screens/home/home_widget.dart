@@ -109,16 +109,16 @@ class HomeWidget extends StatelessWidget {
   }
 
   void _toSaveScreen(BuildContext context, NoteModel note) {
-    Navigator.push(
-      context,
-      ScreenTransition().rightToLeft(
-        context,
-        SaveView(
-          note,
-          onAction: () async {
-            await AppModule.to.bloc<HomeBloc>().findAll();
-          },
-        ),
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (builder) {
+          return SaveView(
+            note,
+            onAction: () async {
+              await AppModule.to.bloc<HomeBloc>().findAll();
+            },
+          );
+        },
       ),
     );
   }

@@ -163,17 +163,31 @@ class _SaveViewState extends State<SaveView> {
             return Stack(
               fit: StackFit.expand,
               children: [
-                Hero(
-                  tag: "Background_${widget.note.id}",
-                  child: Container(
-                    color: theme.bgColor == null ? Colors.white : theme.bgColor,
-                    child: theme.bgAsset != null
-                        ? Image.asset(
-                            theme.bgAsset!,
-                            fit: BoxFit.fitHeight,
-                          )
-                        : null,
+                Visibility(
+                  child: Hero(
+                    tag: 'BackgroundColor_${widget.note.id}',
+                    child: Container(
+                      color:
+                          theme.bgColor == null ? Colors.white : theme.bgColor,
+                    ),
                   ),
+                  visible: theme.bgColor != null,
+                ),
+                Visibility(
+                  child: Hero(
+                    tag: 'BackgroundImage_${widget.note.id}',
+                    child: SizedBox(
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: theme.bgAsset != null
+                          ? Image.asset(
+                              theme.bgAsset!,
+                              fit: BoxFit.fitHeight,
+                            )
+                          : null,
+                    ),
+                  ),
+                  visible: theme.bgAsset != null,
                 ),
                 SingleChildScrollView(
                   child: Column(

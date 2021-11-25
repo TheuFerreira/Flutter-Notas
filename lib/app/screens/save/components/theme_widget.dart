@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/screens/save/components/theme_tile_widget.dart';
 import 'package:flutter_notas/app/screens/save/save_bloc.dart';
+import 'package:flutter_notas/app/shared/const/themes.dart';
 
 class ThemeWidget extends StatefulWidget {
   final SaveBloc bloc;
@@ -62,39 +63,3 @@ class _ThemeWidgetState extends State<ThemeWidget> {
     );
   }
 }
-
-class OptionTheme {
-  final String? title;
-  final Color? fontColor;
-  final Color? bgColor;
-  final String? bgAsset;
-
-  const OptionTheme({this.title, this.fontColor, this.bgColor, this.bgAsset});
-}
-
-const themes = [
-  OptionTheme(
-    title: 'Padrão',
-    fontColor: null,
-    bgColor: null,
-    bgAsset: null,
-  ),
-  OptionTheme(
-    title: 'Blue Accent',
-    fontColor: Colors.white,
-    bgColor: Colors.blueAccent,
-    bgAsset: null,
-  ),
-  OptionTheme(
-    title: 'Imagem',
-    fontColor: Colors.white,
-    bgColor: null,
-    bgAsset: 'assets/images/backgrounds/bg_01.jpg',
-  ),
-  OptionTheme(
-    title: 'Imagem',
-    fontColor: Colors.black,
-    bgColor: null,
-    bgAsset: 'assets/images/backgrounds/bg_02.jpg',
-  ),
-];

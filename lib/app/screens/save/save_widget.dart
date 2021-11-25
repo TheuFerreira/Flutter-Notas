@@ -4,6 +4,7 @@ import 'package:flutter_notas/app/screens/save/components/options_widget.dart';
 import 'package:flutter_notas/app/screens/save/components/share_widget.dart';
 import 'package:flutter_notas/app/screens/save/components/theme_widget.dart';
 import 'package:flutter_notas/app/screens/save/save_bloc.dart';
+import 'package:flutter_notas/app/shared/const/themes.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 import 'package:flutter_notas/app/shared/services/dialog_service.dart';
 
@@ -108,7 +109,7 @@ class _SaveViewState extends State<SaveView> {
     );
   }
 
-  Widget body(Color? fontColor) {
+  Widget body(Color? fontColor, Color? hintColor) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -118,6 +119,9 @@ class _SaveViewState extends State<SaveView> {
               controller: bloc.titleController,
               decoration: InputDecoration(
                 hintText: 'Título',
+                hintStyle: TextStyle(
+                  color: hintColor,
+                ),
               ),
               style: TextStyle(
                 fontSize: 16.0,
@@ -130,6 +134,9 @@ class _SaveViewState extends State<SaveView> {
               maxLines: 100,
               decoration: InputDecoration(
                 hintText: 'Descrição',
+                hintStyle: TextStyle(
+                  color: hintColor,
+                ),
               ),
               style: TextStyle(
                 fontSize: 16.0,
@@ -145,6 +152,7 @@ class _SaveViewState extends State<SaveView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: StreamBuilder<int>(
           stream: bloc.currentTheme,
@@ -172,7 +180,7 @@ class _SaveViewState extends State<SaveView> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       appBar(theme.fontColor),
-                      body(theme.fontColor),
+                      body(theme.fontColor, theme.hintColor),
                     ],
                   ),
                 ),

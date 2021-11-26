@@ -45,4 +45,17 @@ class GroupDAO {
       whereArgs: [group.idGroup],
     );
   }
+
+  Future deleteList(List<GroupModel> groups) async {
+    final db = await _db.getDatabase();
+    final bt = db.batch();
+    for (GroupModel group in groups) {
+      bt.delete(
+        'group',
+        where: 'id_group = ?',
+        whereArgs: [group.idGroup],
+      );
+    }
+    await bt.commit();
+  }
 }

@@ -17,10 +17,19 @@ class NoteItem extends StatelessWidget {
     bloc = NoteItemBloc(note.lastModify!);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+  Widget item(BuildContext context, bool showingCategory) {
+    const padLeft = 8.0;
+    const padRight = 8.0;
+    const padding = padRight + padLeft;
+
+    const circleSize = 50.0;
+    const padBettween = 8.0;
+    var categorySize = showingCategory ? circleSize + padBettween : 0;
+
+    var width = MediaQuery.of(context).size.width - padding - categorySize;
+
+    return Container(
+      width: width,
       child: InkWell(
         onTap: onTap,
         highlightColor: Colors.transparent,
@@ -95,6 +104,45 @@ class NoteItem extends StatelessWidget {
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Visibility(
+            child: Row(
+              children: [
+                Center(
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(25),
+                    clipBehavior: Clip.antiAlias,
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.white,
+                      child: note.group != null
+                          ? Image.memory(
+                              note.group!.buffer!,
+                              cacheWidth: 30,
+                            )
+                          : SizedBox(),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8.0),
+              ],
+            ),
+            visible: note.group != null,
+          ),
+          item(context, note.group != null),
+        ],
+      ),
+    );
+  }
+
   Widget _text(String data, BuildContext context) {
     return Text(
       data,
@@ -109,3 +157,7 @@ class NoteItem extends StatelessWidget {
     );
   }
 }
+
+/*
+
+*/

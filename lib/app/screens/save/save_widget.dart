@@ -209,6 +209,7 @@ class _SaveViewState extends State<SaveView> {
           Icons.edit,
           color: Colors.white,
         ),
+        backgroundColor: Theme.of(context).iconTheme.color,
       ),
     );
   }

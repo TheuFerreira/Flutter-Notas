@@ -36,13 +36,14 @@ class AppWidget extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       iconTheme: IconThemeData(
-        color: Colors.yellowAccent[400],
+        color: Color.fromARGB(255, 80, 80, 80),
       ),
       textTheme: TextTheme(
         bodyText1: TextStyle(
           color: Colors.white,
         ),
       ),
+      cardColor: Color.fromARGB(255, 60, 60, 60),
     );
   }
 
@@ -56,13 +57,14 @@ class AppWidget extends StatelessWidget {
         brightness: Brightness.light,
       ),
       iconTheme: IconThemeData(
-        color: Colors.yellowAccent[400],
+        color: Color.fromARGB(255, 150, 150, 150),
       ),
       textTheme: TextTheme(
         bodyText1: TextStyle(
           color: Colors.black,
         ),
       ),
+      cardColor: Colors.white,
     );
   }
 

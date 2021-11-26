@@ -104,6 +104,7 @@ class HomeWidget extends StatelessWidget {
           Icons.add,
           color: Colors.white,
         ),
+        backgroundColor: Theme.of(context).iconTheme.color,
       ),
     );
   }

@@ -41,7 +41,6 @@ class SaveBloc {
       note.description = description.trim();
       note.lastModify = DateTime.now();
       note.theme = _currentTheme;
-      print(note.theme);
 
       await _noteDAO.save(note);
     }

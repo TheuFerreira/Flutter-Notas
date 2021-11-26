@@ -28,7 +28,7 @@ class NoteItem extends StatelessWidget {
         child: Material(
           elevation: 2,
           borderRadius: BorderRadius.circular(16.0),
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           clipBehavior: Clip.antiAlias,
           child: Stack(
             children: [

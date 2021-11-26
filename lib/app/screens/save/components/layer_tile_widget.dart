@@ -24,14 +24,18 @@ class LayerTileWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: group.buffer != null
+              ? MainAxisAlignment.spaceEvenly
+              : MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 54,
-              height: 54,
-              child: group.buffer != null
-                  ? Image.memory(group.buffer!)
-                  : Image.asset('assets/images/groups/group_add.png'),
+            Visibility(
+              child: SizedBox(
+                width: 54,
+                height: 54,
+                child:
+                    group.buffer != null ? Image.memory(group.buffer!) : null,
+              ),
+              visible: group.buffer != null,
             ),
             Text(
               group.title!,

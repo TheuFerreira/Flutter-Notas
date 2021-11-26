@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_notas/app/screens/save/components/custom_floating_button_widget.dart';
+import 'package:flutter_notas/app/screens/save/components/layer_tile_widget.dart';
 import 'package:flutter_notas/app/screens/save/components/options_widget.dart';
 import 'package:flutter_notas/app/screens/save/components/share_widget.dart';
 import 'package:flutter_notas/app/screens/save/components/theme_widget.dart';
 import 'package:flutter_notas/app/screens/save/save_bloc.dart';
 import 'package:flutter_notas/app/shared/const/themes.dart';
+import 'package:flutter_notas/app/shared/models/group_model.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 import 'package:flutter_notas/app/shared/services/dialog_service.dart';
 
@@ -198,19 +201,107 @@ class _SaveViewState extends State<SaveView> {
                     ],
                   ),
                 ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        CustomFloatingButtonWidget(
+                          icon: Icons.layers,
+                          onTap: showOptionsLayers,
+                        ),
+                        SizedBox(height: 8.0),
+                        CustomFloatingButtonWidget(
+                          icon: Icons.edit,
+                          onTap: showOptionsWidget,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             );
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: showOptionsWidget,
-        child: Icon(
-          Icons.edit,
-          color: Colors.white,
-        ),
-        backgroundColor: Theme.of(context).iconTheme.color,
-      ),
+    );
+  }
+
+  void showOptionsLayers() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+                child: Text(
+                  'Selecione um Grupo',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 250,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: StreamBuilder<List<GroupModel>>(
+                  stream: bloc.groups,
+                  initialData: [],
+                  builder: (context, snapshot) {
+                    final groups = snapshot.data!;
+                    return Builder(
+                      builder: (context) {
+                        return StreamBuilder<GroupModel?>(
+                          stream: bloc.currentGroup,
+                          initialData: null,
+                          builder: (context, snapshot) {
+                            final currentGroup = snapshot.data;
+                            return GridView.builder(
+                              physics: BouncingScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 16.0,
+                                crossAxisSpacing: 16.0,
+                                childAspectRatio: .9,
+                              ),
+                              itemCount: groups.length,
+                              itemBuilder: (context, i) {
+                                GroupModel group = groups[i];
+                                bool isSelected = false;
+                                if (currentGroup == null && i == 0) {
+                                  isSelected = true;
+                                } else if (currentGroup != null) {
+                                  if (groups[i].idGroup ==
+                                      currentGroup.idGroup) {
+                                    isSelected = true;
+                                  }
+                                }
+                                return LayerTileWidget(
+                                  group,
+                                  isSelected: isSelected,
+                                  onTap: bloc.changeSelectedGroup,
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

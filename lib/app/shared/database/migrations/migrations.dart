@@ -41,11 +41,11 @@ const version2 = [
   "DROP TABLE note;",
   "CREATE TABLE note ( " +
       "id_note     INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+      "id_group    INTEGER  REFERENCES [group] (id_group), " +
       "title       TEXT, " +
       "description TEXT, " +
       "last_modify DATE, " +
       "theme       INTEGER, " +
-      "id_group    INTEGER  REFERENCES [group] (id_group), " +
       "status               NOT NULL DEFAULT (1)  " +
       ");",
   "INSERT INTO note ( " +

@@ -21,7 +21,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(
-            Icons.arrow_back,
+            Icons.close,
             color: Theme.of(context).textTheme.bodyText1!.color,
           ),
         ),

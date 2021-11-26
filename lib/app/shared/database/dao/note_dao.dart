@@ -8,7 +8,8 @@ class NoteDAO {
   Future<List<NoteModel>> findAll() async {
     Database db = await _appDatabase.getDatabase();
     List<Map<String, dynamic>> result = await db
-        .query('note', where: 'status = 1', orderBy: 'last_modify DESC')
+        .rawQuery(
+            "SELECT n.id_note, n.title, n.description, n.last_modify, n.theme, g.id_group, g.title AS g_title, g.image FROM note AS n LEFT JOIN 'group' AS g ON g.id_group = n.id_group WHERE status = 1 ORDER BY last_modify DESC;")
         .timeout(Duration(seconds: 5));
     List<NoteModel> notes =
         result.map((json) => NoteModel.fromJson(json)).toList();

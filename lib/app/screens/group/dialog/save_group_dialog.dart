@@ -22,14 +22,24 @@ class SaveGroupDialog {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Adicionar Grupo'),
+          title: Text(
+            'Adicionar Grupo',
+            style: TextStyle(color: Colors.black),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _bloc.titleController,
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   hintText: 'Título*',
+                  hintStyle: TextStyle(color: Colors.black54),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black54,
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 8),
@@ -60,8 +70,14 @@ class SaveGroupDialog {
                   ),
                   TextButton.icon(
                     onPressed: _bloc.changeImage,
-                    icon: Icon(Icons.image),
-                    label: Text('Trocar Imagem'),
+                    icon: Icon(
+                      Icons.image,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      'Trocar Imagem',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.black,
                     ),
@@ -87,7 +103,10 @@ class SaveGroupDialog {
                 Navigator.of(context).pop();
                 onSave!();
               },
-              child: Text('Adicionar'),
+              child: Text(
+                'Adicionar',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         );

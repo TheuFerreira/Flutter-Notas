@@ -85,7 +85,7 @@ class _SaveViewState extends State<SaveView> {
                   var result = await _dialogSerice.showAlertDialog(
                       context,
                       'Confirmação',
-                      'Tem certeza de que deseja excluir as notas selecionadas?');
+                      'Tem certeza de que deseja excluir a nota selecionada?');
 
                   if (result == null) {
                     return;

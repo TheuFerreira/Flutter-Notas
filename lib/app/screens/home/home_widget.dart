@@ -35,7 +35,7 @@ class HomeWidget extends StatelessWidget {
             },
             icon: Icon(
               Icons.layers,
-              color: Colors.black,
+              color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
           IconButton(

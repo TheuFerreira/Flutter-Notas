@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/screens/group/components/group_item_widget.dart';
-import 'package:flutter_notas/app/screens/group/dialog/delete_group_dialog.dart';
 import 'package:flutter_notas/app/screens/group/dialog/save_group_dialog.dart';
 import 'package:flutter_notas/app/screens/group/group_bloc.dart';
 import 'package:flutter_notas/app/shared/models/group_model.dart';
+import 'package:flutter_notas/app/shared/services/dialog_service.dart';
 
 class GroupWidget extends StatefulWidget {
   const GroupWidget({Key? key}) : super(key: key);
@@ -44,13 +44,17 @@ class _GroupWidgetState extends State<GroupWidget> {
               return Visibility(
                 child: IconButton(
                   onPressed: () async {
-                    final result = await DeleteGroupDialog().show(context);
+                    final result = await DialogService().showAlertDialog(
+                      context,
+                      'Confirmação de Exlusão',
+                      'Tem certeza de que deseja excluir o(s) grupo(s) selecionado(s)?',
+                    );
                     if (result == false) return;
 
                     _bloc.deleteSelectedGroups();
                   },
                   icon: Icon(Icons.delete),
-                  color: Colors.black,
+                  color: Theme.of(context).textTheme.bodyText1!.color,
                 ),
                 visible: hasSelection,
               );

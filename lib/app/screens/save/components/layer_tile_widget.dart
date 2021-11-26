@@ -19,6 +19,7 @@ class LayerTileWidget extends StatelessWidget {
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       child: Material(
+        shadowColor: Theme.of(context).textTheme.bodyText1!.color,
         elevation: isSelected == true ? 2 : 0,
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
@@ -37,6 +38,7 @@ class LayerTileWidget extends StatelessWidget {
               maxLines: 2,
               style: const TextStyle(
                 fontSize: 16.0,
+                color: Colors.black,
               ),
             ),
           ],

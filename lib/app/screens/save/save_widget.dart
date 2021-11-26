@@ -65,7 +65,7 @@ class _SaveViewState extends State<SaveView> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             iconButton(
-              Icons.arrow_back,
+              Icons.close,
               onPressed: () => Navigator.pop(context),
               fontColor: fontColor,
             ),

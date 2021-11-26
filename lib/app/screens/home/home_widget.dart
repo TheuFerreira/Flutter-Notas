@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/app_module.dart';
+import 'package:flutter_notas/app/screens/group/group_widget.dart';
 import 'package:flutter_notas/app/screens/home/components/note_item.dart';
 import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/screens/save/save_widget.dart';
@@ -23,6 +24,20 @@ class HomeWidget extends StatelessWidget {
           ),
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                ScreenTransition().rightToLeft(
+                  context,
+                  GroupWidget(),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.layers,
+              color: Colors.black,
+            ),
+          ),
           IconButton(
             onPressed: () {
               Navigator.of(context).push(

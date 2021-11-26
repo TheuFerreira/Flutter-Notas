@@ -36,6 +36,9 @@ dependencies:
   local_auth: ^1.1.8
   marquee: ^2.2.0
   rxdart: ^0.27.2
+  dotted_border: ^2.0.0+1
+  image_picker: ^0.8.4+4
+  image_cropper: ^1.4.1
   
 dev_dependencies:
   flutter_test:
@@ -62,6 +65,7 @@ flutter:
   assets:
     - google_fonts/
     - assets/images/backgrounds/
+    - assets/images/groups/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

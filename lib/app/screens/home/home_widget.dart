@@ -6,6 +6,7 @@ import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/screens/save/save_widget.dart';
 import 'package:flutter_notas/app/screens/settings/settings_widget.dart';
 import 'package:flutter_notas/app/shared/animations/screen_transitions.dart';
+import 'package:flutter_notas/app/shared/models/group_model.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -25,14 +26,7 @@ class HomeWidget extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                ScreenTransition().rightToLeft(
-                  context,
-                  GroupWidget(),
-                ),
-              );
-            },
+            onPressed: () => _toGroupScreen(context),
             icon: Icon(
               Icons.layers,
               color: Theme.of(context).textTheme.bodyText1!.color,
@@ -54,64 +48,126 @@ class HomeWidget extends StatelessWidget {
           ),
         ],
       ),
-      body: StreamBuilder<List<NoteModel>>(
-        stream: AppModule.to.bloc<HomeBloc>().notes,
-        initialData: [],
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SizedBox(
+              height: 30,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 8),
                   Text(
-                    'Carregando',
+                    'Filtrar',
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
                   ),
+                  StreamBuilder<String>(
+                    stream: AppModule.to.bloc<HomeBloc>().asFilter,
+                    initialData: "Total",
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null) {
+                        return SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                            strokeWidth: 2,
+                          ),
+                        );
+                      }
+
+                      final value = snapshot.data;
+                      return DropdownButton<String>(
+                        onChanged: (selectedGroup) => AppModule.to
+                            .bloc<HomeBloc>()
+                            .isFilter
+                            .add(selectedGroup!),
+                        underline: SizedBox(),
+                        value: value,
+                        items: AppModule.to
+                            .bloc<HomeBloc>()
+                            .groups
+                            .map(
+                              (e) => DropdownMenuItem<String>(
+                                key: UniqueKey(),
+                                child: Text(e.title!),
+                                value: e.title!,
+                              ),
+                            )
+                            .toList(),
+                      );
+                    },
+                  ),
                 ],
               ),
-            );
-          }
-
-          if (snapshot.data!.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.bookmark,
-                    size: 64.0,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                  Text(
-                    'Nenhuma nota encontrada',
-                    style: TextStyle(
-                      fontSize: 16.0,
+            ),
+          ),
+          Divider(),
+          Expanded(
+            child: StreamBuilder<List<NoteModel>>(
+              stream: AppModule.to.bloc<HomeBloc>().notes,
+              initialData: [],
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 8),
+                        Text(
+                          'Carregando',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            );
-          }
+                  );
+                }
 
-          List<NoteModel> notes = snapshot.data as List<NoteModel>;
+                if (snapshot.data!.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.bookmark,
+                          size: 64.0,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        Text(
+                          'Nenhuma nota encontrada',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
 
-          return ListView.builder(
-            itemCount: notes.length,
-            itemBuilder: (context, index) {
-              NoteModel note = notes[index];
+                List<NoteModel> notes = snapshot.data as List<NoteModel>;
 
-              return NoteItem(
-                note,
-                key: UniqueKey(),
-                onTap: () => _toSaveScreen(context, note),
-              );
-            },
-          );
-        },
+                return ListView.builder(
+                  itemCount: notes.length,
+                  itemBuilder: (context, index) {
+                    NoteModel note = notes[index];
+
+                    return NoteItem(
+                      note,
+                      key: UniqueKey(),
+                      onTap: () => _toSaveScreen(context, note),
+                    );
+                  },
+                );
+              },
+            ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _toSaveScreen(context, NoteModel()),
@@ -124,14 +180,25 @@ class HomeWidget extends StatelessWidget {
     );
   }
 
+  void _toGroupScreen(BuildContext context) async {
+    await Navigator.of(context).push(
+      ScreenTransition().rightToLeft(
+        context,
+        GroupWidget(),
+      ),
+    );
+
+    AppModule.to.bloc<HomeBloc>().reloadNotes();
+  }
+
   void _toSaveScreen(BuildContext context, NoteModel note) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (builder) {
           return SaveView(
             note,
-            onAction: () async {
-              await AppModule.to.bloc<HomeBloc>().findAll();
+            onAction: () {
+              AppModule.to.bloc<HomeBloc>().reloadNotes();
             },
           );
         },

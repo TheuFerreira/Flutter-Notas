@@ -64,6 +64,7 @@ class AppWidget extends StatelessWidget {
           color: Colors.black,
         ),
       ),
+      dividerColor: Colors.black54,
       cardColor: Colors.white,
     );
   }

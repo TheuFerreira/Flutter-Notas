@@ -6,7 +6,6 @@ import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/screens/save/save_widget.dart';
 import 'package:flutter_notas/app/screens/settings/settings_widget.dart';
 import 'package:flutter_notas/app/shared/animations/screen_transitions.dart';
-import 'package:flutter_notas/app/shared/models/group_model.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
 class HomeWidget extends StatelessWidget {

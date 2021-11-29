@@ -125,6 +125,20 @@ class _SaveViewState extends State<SaveView> {
                 hintStyle: TextStyle(
                   color: hintColor,
                 ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: hintColor == null
+                        ? Theme.of(context).textTheme.bodyText1!.color!
+                        : hintColor,
+                  ),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: fontColor == null
+                        ? Theme.of(context).textTheme.bodyText1!.color!
+                        : fontColor,
+                  ),
+                ),
               ),
               style: TextStyle(
                 fontSize: 16.0,

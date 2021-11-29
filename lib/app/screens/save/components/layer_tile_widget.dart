@@ -20,7 +20,7 @@ class LayerTileWidget extends StatelessWidget {
       splashColor: Colors.transparent,
       child: Material(
         shadowColor: Theme.of(context).textTheme.bodyText1!.color,
-        elevation: isSelected == true ? 2 : 0,
+        elevation: isSelected == true ? 8 : 2,
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
         child: Column(

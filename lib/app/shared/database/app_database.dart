@@ -22,6 +22,6 @@ class AppDatabase {
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    version1.forEach((script) async => db.execute(script));
+    defaultBD.forEach((script) async => db.execute(script));
   }
 }

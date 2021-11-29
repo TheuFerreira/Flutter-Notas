@@ -1,9 +1,16 @@
-const version1 = [
+const defaultBD = [
+  'CREATE TABLE [group] ( '
+      'id_group INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '
+      'title    TEXT    NOT NULL, '
+      'image    BIGINT  NOT NULL '
+      ');',
   'CREATE TABLE note ( '
       'id_note INTEGER, '
+      'id_group INTEGER REFERENCES [group] (id_group), '
       'title TEXT, '
       'description TEXT, '
       'last_modify DATE, '
+      'theme INTEGER, '
       'status	INTEGER NOT NULL DEFAULT 1, '
       'PRIMARY KEY("id_note" AUTOINCREMENT) '
       ');',

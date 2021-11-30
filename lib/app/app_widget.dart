@@ -40,10 +40,13 @@ class AppWidget extends StatelessWidget {
       iconTheme: IconThemeData(
         color: Color.fromARGB(255, 80, 80, 80),
       ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.white,
+        selectionColor: Colors.white24,
+        selectionHandleColor: Colors.white,
+      ),
       textTheme: TextTheme(
-        bodyText1: TextStyle(
-          color: Colors.white,
-        ),
+        bodyText1: TextStyle(color: Colors.white),
       ),
       cardColor: Color.fromARGB(255, 60, 60, 60),
     );
@@ -63,10 +66,13 @@ class AppWidget extends StatelessWidget {
       iconTheme: IconThemeData(
         color: Color.fromARGB(255, 150, 150, 150),
       ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.black,
+        selectionColor: Colors.grey[300],
+        selectionHandleColor: Colors.black,
+      ),
       textTheme: TextTheme(
-        bodyText1: TextStyle(
-          color: Colors.black,
-        ),
+        bodyText1: TextStyle(color: Colors.black),
       ),
       dividerColor: Colors.black54,
       cardColor: Colors.white,

@@ -120,11 +120,10 @@ class _SaveViewState extends State<SaveView> {
           children: [
             TextField(
               controller: bloc.titleController,
+              cursorColor: fontColor,
               decoration: InputDecoration(
                 hintText: 'Título',
-                hintStyle: TextStyle(
-                  color: hintColor,
-                ),
+                hintStyle: TextStyle(color: hintColor),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: hintColor == null
@@ -149,11 +148,10 @@ class _SaveViewState extends State<SaveView> {
               controller: bloc.descriptionController,
               keyboardType: TextInputType.multiline,
               maxLines: 100,
+              cursorColor: fontColor,
               decoration: InputDecoration(
                 hintText: 'Descrição',
-                hintStyle: TextStyle(
-                  color: hintColor,
-                ),
+                hintStyle: TextStyle(color: hintColor),
               ),
               style: TextStyle(
                 fontSize: 16.0,

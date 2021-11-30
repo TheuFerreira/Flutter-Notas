@@ -29,6 +29,8 @@ class AppWidget extends StatelessWidget {
 
   ThemeData _darkTheme(SettingsModel settings) {
     return ThemeData(
+      scaffoldBackgroundColor: Color.fromARGB(255, 30, 30, 30),
+      backgroundColor: Color.fromARGB(255, 30, 30, 30),
       fontFamily: _getFontFamily(settings),
       brightness: Brightness.dark,
       colorScheme: ColorScheme.dark(
@@ -50,6 +52,8 @@ class AppWidget extends StatelessWidget {
   ThemeData _lightTheme(SettingsModel settings) {
     return ThemeData(
       fontFamily: _getFontFamily(settings),
+      scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       brightness: Brightness.light,
       colorScheme: ColorScheme.light(
         primary: Colors.white,

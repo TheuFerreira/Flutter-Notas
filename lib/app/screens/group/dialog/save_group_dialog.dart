@@ -61,12 +61,21 @@ class SaveGroupDialog {
                   builder: (context, snapshot) {
                     final value = snapshot.data!;
                     return DropdownButton(
-                      underline: Divider(height: 8),
+                      style: TextStyle(color: Colors.black),
+                      underline: SizedBox(
+                        height: 8.0,
+                        child: Divider(height: 8, color: Colors.black),
+                      ),
+                      dropdownColor: Colors.white,
+                      iconEnabledColor: Colors.grey[700],
                       isExpanded: true,
                       value: value,
                       items: ['Padrão', 'Customizado']
                           .map((e) => DropdownMenuItem(
-                                child: Text(e),
+                                child: Text(
+                                  e,
+                                  style: TextStyle(color: Colors.black),
+                                ),
                                 value: e,
                               ))
                           .toList(),

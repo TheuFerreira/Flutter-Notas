@@ -29,15 +29,25 @@ class SaveGroupDialog {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                controller: _bloc.titleController,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  hintText: 'Título*',
-                  hintStyle: TextStyle(color: Colors.black54),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black54,
+              Theme(
+                data: Theme.of(context).copyWith(
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: Colors.black,
+                    selectionColor: Colors.grey[300],
+                    selectionHandleColor: Colors.black,
+                  ),
+                ),
+                child: TextField(
+                  controller: _bloc.titleController,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    hintText: 'Título*',
+                    hintStyle: TextStyle(color: Colors.black54),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black54),
                     ),
                   ),
                 ),

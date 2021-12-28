@@ -166,10 +166,10 @@ class _SaveViewState extends State<SaveView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: StreamBuilder<int>(
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: StreamBuilder<int>(
           stream: bloc.currentTheme,
           initialData: 0,
           builder: (context, snapshot) {

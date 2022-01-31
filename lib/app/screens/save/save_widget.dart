@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_notas/app/screens/save/components/custom_floating_button_widget.dart';
 import 'package:flutter_notas/app/screens/save/components/layer_tile_widget.dart';
 import 'package:flutter_notas/app/screens/save/components/options_widget.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_notas/app/shared/const/themes.dart';
 import 'package:flutter_notas/app/shared/models/group_model.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 import 'package:flutter_notas/app/shared/services/dialog_service.dart';
+import 'package:flutter_notas/app/shared/services/toast_service.dart';
 
 class SaveView extends StatefulWidget {
   final NoteModel note;
@@ -343,18 +343,8 @@ class _SaveViewState extends State<SaveView> {
 
                 Navigator.pop(context);
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text('Descrição da nota copiado com sucesso!!!'),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                ToastService.showToast(
+                    'Descrição da nota copiada com sucesso!!!');
               },
             ),
           );

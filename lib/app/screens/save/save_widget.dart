@@ -87,7 +87,7 @@ class _SaveViewState extends State<SaveView> {
                       'Confirmação',
                       'Tem certeza de que deseja excluir a nota selecionada?');
 
-                  if (result == null) {
+                  if (result == null || result == false) {
                     return;
                   }
 
@@ -322,6 +322,7 @@ class _SaveViewState extends State<SaveView> {
       context: context,
       builder: (context) => OptionsWidget(
         showShare: widget.note.id != null,
+        isFavorited: widget.note.favorited == 1,
         themeTap: () {
           Navigator.pop(context);
           showModalBottomSheet(
@@ -344,10 +345,23 @@ class _SaveViewState extends State<SaveView> {
                 Navigator.pop(context);
 
                 ToastService.showToast(
-                    'Descrição da nota copiada com sucesso!!!');
+                  'Descrição da nota copiada com sucesso!!!',
+                );
               },
             ),
           );
+        },
+        favoriteTap: (value) async {
+          await bloc.favorite(widget.note, value);
+
+          if (value == 1) {
+            ToastService.showToast('Nota favoritada');
+          } else {
+            ToastService.showToast('Nota removida dos favoritos');
+          }
+
+          widget.onAction!();
+          Navigator.pop(context);
         },
       ),
     );

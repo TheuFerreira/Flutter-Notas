@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_notas/app/screens/home/components/note_item_block.dart';
+import 'package:flutter_notas/app/shared/components/note_item_block.dart';
 import 'package:flutter_notas/app/shared/const/themes.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
@@ -86,12 +86,26 @@ class NoteItem extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        'Última Alteração: ${bloc.lastModify}',
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: themes[note.theme!].lastModifyColor,
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Última Alteração: ${bloc.lastModify}',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: themes[note.theme!].lastModifyColor,
+                            ),
+                          ),
+                          Visibility(
+                            child: Icon(
+                              Icons.star,
+                              size: 16,
+                              color:
+                                  Theme.of(context).textTheme.bodyText1!.color,
+                            ),
+                            visible: note.favorited == 1,
+                          ),
+                        ],
                       ),
                     ),
                   ],

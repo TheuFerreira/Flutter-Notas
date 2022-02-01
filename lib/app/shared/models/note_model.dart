@@ -2,6 +2,7 @@ import 'package:flutter_notas/app/shared/models/group_model.dart';
 
 class NoteModel {
   int? id;
+  int favorited = 0;
   GroupModel? group;
   String? title;
   String? description;
@@ -12,6 +13,7 @@ class NoteModel {
 
   NoteModel.fromJson(Map<String, dynamic> json) {
     id = json['id_note'];
+    favorited = json['favorited'];
     title = json['title'];
     description = json['description'];
     lastModify = DateTime.fromMillisecondsSinceEpoch(json['last_modify']);
@@ -30,6 +32,7 @@ class NoteModel {
     return {
       'id_note': id,
       'id_group': group == null ? null : group!.idGroup!,
+      'favorited': favorited,
       'title': title,
       'description': description,
       'last_modify': lastModify!.millisecondsSinceEpoch,

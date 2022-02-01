@@ -2,6 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/app_bloc.dart';
 import 'package:flutter_notas/app/app_widget.dart';
+import 'package:flutter_notas/app/screens/favorited/favorited_bloc.dart';
 import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 
 class AppModule extends ModuleWidget {
@@ -9,6 +10,7 @@ class AppModule extends ModuleWidget {
   List<Bloc> get blocs => [
         Bloc((i) => AppBloc()),
         Bloc((i) => HomeBloc()),
+        Bloc((i) => FavoritedBloc())
       ];
 
   @override

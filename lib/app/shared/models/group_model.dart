@@ -6,7 +6,9 @@ class GroupModel {
   String? icon;
   Uint8List? buffer;
 
-  GroupModel();
+  GroupModel() {
+    idGroup = -1;
+  }
 
   GroupModel.fromJson(Map<String, dynamic> json)
       : idGroup = json['id_group'],

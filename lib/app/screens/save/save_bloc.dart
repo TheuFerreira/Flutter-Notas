@@ -74,6 +74,11 @@ class SaveBloc {
     Navigator.pop(context);
   }
 
+  Future favorite(NoteModel note, int value) async {
+    note.favorited = value;
+    await _noteDAO.favorite(note);
+  }
+
   void delete(BuildContext context, NoteModel note) async {
     await _noteDAO.delete(note);
 

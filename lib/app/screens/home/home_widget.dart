@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/app_module.dart';
+import 'package:flutter_notas/app/screens/favorited/favorited_widget.dart';
 import 'package:flutter_notas/app/screens/group/group_widget.dart';
-import 'package:flutter_notas/app/screens/home/components/note_item.dart';
 import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/screens/save/save_widget.dart';
 import 'package:flutter_notas/app/screens/settings/settings_widget.dart';
 import 'package:flutter_notas/app/shared/animations/screen_transitions.dart';
+import 'package:flutter_notas/app/shared/components/note_item.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -24,6 +25,22 @@ class HomeWidget extends StatelessWidget {
           ),
         ),
         actions: [
+          IconButton(
+            onPressed: () async {
+              await Navigator.of(context).push(
+                ScreenTransition().rightToLeft(
+                  context,
+                  FavoritedWidget(),
+                ),
+              );
+
+              AppModule.to.bloc<HomeBloc>().reloadNotes();
+            },
+            icon: Icon(
+              Icons.star,
+              color: Theme.of(context).textTheme.bodyText1!.color,
+            ),
+          ),
           IconButton(
             onPressed: () => _toGroupScreen(context),
             icon: Icon(

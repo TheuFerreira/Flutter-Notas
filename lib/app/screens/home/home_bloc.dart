@@ -11,7 +11,7 @@ class HomeBloc extends BlocBase {
   List<NoteModel> _notes = [];
   final NoteDAO _noteDAO = NoteDAO();
 
-  final _streamNotes = StreamController<List<NoteModel>>();
+  final _streamNotes = BehaviorSubject<List<NoteModel>>();
   Stream<List<NoteModel>> get notes => _streamNotes.stream;
 
   late List<GroupModel> groups = [];
@@ -43,7 +43,7 @@ class HomeBloc extends BlocBase {
   }
 
   Future _findAll(GroupModel group) async {
-    _notes = await _noteDAO.findAll(group);
+    _notes = await _noteDAO.findAll(group, false);
 
     _streamNotes.add(_notes);
   }

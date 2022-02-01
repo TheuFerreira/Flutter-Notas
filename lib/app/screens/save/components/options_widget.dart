@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 
 class OptionsWidget extends StatelessWidget {
   final bool? showShare;
+  final bool isFavorited;
   final Function()? themeTap;
   final Function()? shareTap;
+  final Function(int)? favoriteTap;
   const OptionsWidget({
     Key? key,
     this.showShare,
+    this.isFavorited = false,
     this.themeTap,
     this.shareTap,
+    this.favoriteTap,
   }) : super(key: key);
 
   @override
@@ -38,6 +42,20 @@ class OptionsWidget extends StatelessWidget {
             title: Text('Compartilhar'),
             onTap: shareTap,
           ),
+          visible: showShare!,
+        ),
+        Visibility(
+          child: isFavorited == false
+              ? ListTile(
+                  leading: Icon(Icons.star),
+                  title: Text('Favoritar'),
+                  onTap: () => favoriteTap!(1),
+                )
+              : ListTile(
+                  leading: Icon(Icons.star_outline),
+                  title: Text('Remover dos Favoritos'),
+                  onTap: () => favoriteTap!(0),
+                ),
           visible: showShare!,
         ),
       ],

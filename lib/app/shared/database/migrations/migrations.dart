@@ -11,6 +11,7 @@ const defaultBD = [
       'description TEXT, '
       'last_modify DATE, '
       'theme INTEGER, '
+      'favorited INTEGER NOT NULL DEFAULT (0), '
       'status	INTEGER NOT NULL DEFAULT 1, '
       'PRIMARY KEY("id_note" AUTOINCREMENT) '
       ');',
@@ -71,4 +72,37 @@ const version2 = [
       "status " +
       "FROM sqlitestudio_temp_table; ",
   "DROP TABLE sqlitestudio_temp_table;",
+];
+
+const version3 = [
+  'CREATE TABLE sqlitestudio_temp_table AS SELECT * FROM note;',
+  'DROP TABLE note;',
+  'CREATE TABLE note ( ' +
+      'id_note     INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ' +
+      'id_group    INTEGER REFERENCES [group] (id_group), ' +
+      'title       TEXT, ' +
+      'description TEXT, ' +
+      'last_modify DATE, ' +
+      'theme       INTEGER, ' +
+      'favorited   INTEGER NOT NULL DEFAULT (0), ' +
+      'status              NOT NULL DEFAULT (1)  ' +
+      ');',
+  'INSERT INTO note ( ' +
+      'id_note, ' +
+      'id_group, ' +
+      'title, ' +
+      'description, ' +
+      'last_modify, ' +
+      'theme, ' +
+      'status ' +
+      ') ' +
+      'SELECT id_note, ' +
+      'id_group, ' +
+      'title, ' +
+      'description, ' +
+      'last_modify, ' +
+      'theme, ' +
+      'status ' +
+      'FROM sqlitestudio_temp_table; ',
+  'DROP TABLE sqlitestudio_temp_table;',
 ];

@@ -6,17 +6,18 @@ import 'package:sqflite/sqflite.dart';
 class NoteDAO {
   final AppDatabase _appDatabase = AppDatabase();
 
-  Future<List<NoteModel>> findAll(GroupModel group) async {
+  Future<List<NoteModel>> findAll(GroupModel group, bool onlyFavorited) async {
     Database db = await _appDatabase.getDatabase();
     List<Map<String, dynamic>> result = await db
         .rawQuery(
           "SELECT " +
-              "n.id_note, n.title, n.description, n.last_modify, n.theme, " +
+              "n.id_note, n.title, n.description, n.last_modify, n.theme, n.favorited, " +
               "g.id_group, g.title AS g_title, g.image " +
               "FROM note AS n " +
               "LEFT JOIN 'group' AS g ON g.id_group = n.id_group " +
               "WHERE status = 1 " +
               (group.idGroup! == -1 ? "" : "AND ? = g.id_group ") +
+              (onlyFavorited ? " AND n.favorited = 1 " : "") +
               "ORDER BY last_modify DESC;",
           group.idGroup! == -1
               ? []
@@ -64,6 +65,17 @@ class NoteDAO {
       note.toJson(),
       where: 'id_note = ?',
       whereArgs: [note.id],
+    ).timeout(Duration(seconds: 5));
+  }
+
+  Future favorite(NoteModel note) async {
+    Database db = await _appDatabase.getDatabase();
+    await db.rawUpdate(
+      'UPDATE note SET favorited = ? WHERE id_note = ?',
+      [
+        note.favorited,
+        note.id,
+      ],
     ).timeout(Duration(seconds: 5));
   }
 }

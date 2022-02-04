@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notas/app/app_module.dart';
 import 'package:flutter_notas/app/screens/favorited/favorited_bloc.dart';
-import 'package:flutter_notas/app/screens/home/home_bloc.dart';
 import 'package:flutter_notas/app/screens/save/save_widget.dart';
 import 'package:flutter_notas/app/shared/components/note_item.dart';
 import 'package:flutter_notas/app/shared/models/note_model.dart';
